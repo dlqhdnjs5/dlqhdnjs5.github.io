@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootApplication
 @Slf4j
 @Configuration
-@ComponentScan(basePackages = "com.study.*")
+@ComponentScan(basePackages = "com.study")
 public class BootReferencePrj1Application {
 	
 	private static Logger log = LoggerFactory.getLogger(BootReferencePrj1Application.class);
