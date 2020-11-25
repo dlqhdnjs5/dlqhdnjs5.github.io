@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.study.mk1.datasource1.mbr">
+ 
+ 	<select id="selectMbrTable" parameterType="java.lang.String" resultType="com.study.mk1.entity.Mbr">
+ 		SELECT 
+			MBR_SEQ as mbrSeq,
+ 			MBR_ID as mbrId,
+ 			MBR_NM as mbrNm,
+ 			MBR_PW as mbrPw,
+ 			MBR_EMAIL as mbrEmail,
+ 			MBR_STAT_CD as mbrStatCd,
+ 			MBR_TP_CD mbrTpCd,
+ 			MBR_MOB_NATION_NO  as mbrMobNationNo,
+ 			MBR_MOB_AREA_NO as mbrMobAreaNo,
+ 			MBR_MOB_TLOF_NO as mbrMobTlofNo,
+ 			MBR_MOB_TLOF_LST_NO as mbrMobTlofLstNo,
+ 			MBR_GRD_CD as mbrGrdCd
+		  FROM MBR mbr
+		 WHERE 1=1
+		   AND mbr.mbr_id = #{mbrId}
+ 	</select>
+ 	
+ 	<insert id="insertMbr" parameterType="com.study.mk1.entity.Mbr">
+ 		INSERT INTO 
+ 		MBR(
+ 			MBR_SEQ,
+ 			MBR_ID,
+ 			MBR_NM,
+ 			MBR_PW,
+ 			MBR_EMAIL,
+ 			MBR_STAT_CD,
+ 			MBR_TP_CD,
+ 			MBR_MOB_NATION_NO,
+ 			MBR_MOB_AREA_NO,
+ 			MBR_MOB_TLOF_NO,
+ 			MBR_MOB_TLOF_LST_NO,
+ 			MBR_GRD_CD,
+ 			REG_DT
+ 		)
+ 		VALUES (
+ 			#{mbrSeq},
+ 			#{mbrId},
+ 			#{mbrNm},
+ 			#{mbrPw},
+ 			#{mbrEmail},
+ 			#{mbrStatCd},
+ 			#{mbrTpCd},
+ 			#{mbrMobNationNo},
+ 			#{mbrMobAreaNo},
+ 			#{mbrMobTlofNo},
+ 			#{mbrMobTlofLstNo},
+ 			#{mbrGrdCd},
+ 			#{regDt}
+ 		)
+ 	</insert>
+ 
+ </mapper>
