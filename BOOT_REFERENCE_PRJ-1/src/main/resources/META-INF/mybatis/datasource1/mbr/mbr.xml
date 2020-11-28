@@ -53,8 +53,10 @@
  			#{mbrMobTlofNo},
  			#{mbrMobTlofLstNo},
  			#{mbrGrdCd},
- 			#{regDt}
+ 			NOW()
  		)
  	</insert>
+ 	
+ 	
  
  </mapper>

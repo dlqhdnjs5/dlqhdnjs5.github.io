@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Mbr extends AbstractEntity {
 	
-	String mbrSeq;
+	int mbrSeq;
 
 	String mbrId;
 	

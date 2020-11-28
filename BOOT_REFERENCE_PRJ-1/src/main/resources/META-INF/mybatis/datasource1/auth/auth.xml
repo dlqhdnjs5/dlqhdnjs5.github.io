@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.study.mk1.datasource1.auth">
+ 	
+ 	
+ 	<insert id="insertMbrAuthMappingUseSelectKey" parameterType="com.study.mk1.data.MbrInfoDTO">
+ 		<selectKey keyProperty="mbr.mbrSeq" resultType="Integer" order="BEFORE">
+			SELECT mbr.mbr_seq as mbrSeq
+			  FROM MBR mbr
+			 WHERE 1=1
+			   AND mbr.mbr_id = #{mbr.mbrId}
+		</selectKey>
+ 		INSERT INTO MBR_AUTH_MAPPING
+ 		(
+ 			MBR_SEQ,
+ 			AUTH_SEQ,
+ 			REG_DT
+ 		)
+ 		VALUES
+ 		(
+ 			#{mbr.mbrSeq},
+ 			#{mbrAuthMappingSeq},
+ 			NOW()
+ 		)
+ 	</insert>
+ 	
+ 
+ </mapper>

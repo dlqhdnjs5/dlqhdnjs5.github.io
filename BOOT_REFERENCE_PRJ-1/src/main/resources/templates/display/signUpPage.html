@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>회원가입</h2>
+<br>
+<br>
+<br>
+<form action="/join">
+
+	ID      : <input type="text" name="mbrId"><br>
+	패스워드      : <input type="text" name="mbrPw"><br>
+	회원명         : <input type="text" name="mbrNm"><br>
+	회원 이메일  : <input type="text" name="mbrEmail"><br>
+	<input type="hidden" value="82" name="mbrMobNationNo">
+	연락처         : <input type="text" maxLength="3" name="mbrMobAreaNo"> - 
+			  <input type="text" maxLength="4" name="mbrMobTlofNo"> - 
+			  <input type="text" maxLength="4" name="mbrMobTlofLstNo">
+			  
+	<br><br><br>
+	
+	<button type="submit">가입</button>
+
+</form>
+</body>
+</html>

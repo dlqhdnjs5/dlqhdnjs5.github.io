@@ -42,7 +42,7 @@ public class BootReferencePrj1Application {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
 		
-		Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:META-INF/mybatis/datasource1/mbr/*.xml");
+		Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:META-INF/mybatis/datasource1/*/*.xml");
 		sessionFactory.setMapperLocations(res);
 		
 		return sessionFactory.getObject();

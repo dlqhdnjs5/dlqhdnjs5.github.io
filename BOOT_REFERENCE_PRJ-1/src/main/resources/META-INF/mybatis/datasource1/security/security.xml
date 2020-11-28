@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.study.mk1.datasource1.security">
+ 	
+ 	<resultMap  id="mbrInfo" type="com.study.mk1.data.MbrInfoDTO">
+ 	
+ 		 <result property="mbr.mbrSeq" column="mbrSeq" />
+ 		 <result property="mbr.mbrId" column="mbrId" />
+ 		 <result property="mbr.mbrNm" column="mbrNm" />
+ 		 <result property="mbr.mbrPw" column="mbrPw" />
+ 		 <result property="mbr.mbrEmail" column="mbrEmail" />
+ 		 <result property="mbr.mbrStatCd" column="mbrStatCd" />
+ 		 <result property="mbr.mbrTpCd" column="mbrTpCd" />
+ 		 <result property="mbr.mbrMobNationNo" column="mbrMobNationNo" />
+ 		 <result property="mbr.mbrMobAreaNo" column="mbrMobAreaNo" />
+ 		 <result property="mbr.mbrMobTlofNo" column="mbrMobTlofNo" />
+ 		 <result property="mbr.mbrMobTlofLstNo" column="mbrMobTlofLstNo" />
+ 		 <result property="mbr.mbrGrdCd" column="mbrGrdCd" />
+ 		 <result property="auth.authCd" column="authCd" />
+ 		 <result property="auth.authNm" column="authNm" />
+ 		 
+ 	</resultMap>
+ 	
+ 	<select id="selectMbrInfo" parameterType="java.lang.String" resultMap="mbrInfo">
+ 		SELECT 
+			mbr.MBR_SEQ AS mbrSeq,
+ 			mbr.MBR_ID AS mbrId,
+ 			mbr.MBR_NM AS mbrNm,
+ 			mbr.MBR_PW AS mbrPw,
+ 			mbr.MBR_EMAIL AS mbrEmail,
+ 			mbr.MBR_STAT_CD AS mbrStatCd,
+ 			mbr.MBR_TP_CD AS mbrTpCd,
+ 			mbr.MBR_MOB_NATION_NO  AS mbrMobNationNo,
+ 			mbr.MBR_MOB_AREA_NO AS mbrMobAreaNo,
+ 			mbr.MBR_MOB_TLOF_NO AS mbrMobTlofNo,
+ 			mbr.MBR_MOB_TLOF_LST_NO AS mbrMobTlofLstNo,
+ 			mbr.MBR_GRD_CD AS mbrGrdCd,
+ 			auth.AUTH_CD AS authCd,
+ 			auth.AUTH_NM AS authNm
+		  FROM MBR mbr
+		  JOIN MBR_AUTH_MAPPING mam ON (mbr.mbr_seq = mam.mbr_seq)
+		  JOIN AUTH auth ON (mam.auth_seq = auth.auth_seq)
+		 WHERE 1=1
+		   AND mbr.mbr_id = #{mbrId}
+ 	</select>
+ 
+ </mapper>
