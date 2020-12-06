@@ -62,11 +62,6 @@ public class SimpleTestController {
 	public String home(HttpServletRequest rquest , HttpServletResponse response)  {
 		
 		log.info("home");
-		
-		Mbr mbr = mbrRepository.selectMbr("brandon01");
-		
-		log.info("result :  {} ", mbr);
-		
 		//TODO : 로그인 만든후 회원가입 만들기
 		return "display/index";
 		

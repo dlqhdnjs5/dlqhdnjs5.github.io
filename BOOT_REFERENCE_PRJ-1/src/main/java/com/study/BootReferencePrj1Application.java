@@ -13,12 +13,14 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @Slf4j
 @Configuration
+@EnableScheduling
 @ComponentScan(basePackages = "com.study")
 public class BootReferencePrj1Application {
 	

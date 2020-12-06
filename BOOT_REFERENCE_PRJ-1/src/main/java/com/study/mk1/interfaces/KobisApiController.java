@@ -29,14 +29,14 @@ import com.study.mk1.data.KobisApiDTO;
 import com.study.mk1.data.KobisApiResult;
 
 @RestController
-public class ApiController {
+public class KobisApiController {
 	
 	 /*영화 진흥 위원회 API 키 */
 	 private final String key = "d51c621b6255f6a26ef87af3e48d2bcf";
 	 /*영화 진흥 위원회 API Url */
 	 private final String KobisUrl =  "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json";
 	 
-	 private static Logger log = LoggerFactory.getLogger(ApiController.class);
+	 private static Logger log = LoggerFactory.getLogger(KobisApiController.class);
 	 
 	/**
 	 * 영화 진흥 위원회  API
