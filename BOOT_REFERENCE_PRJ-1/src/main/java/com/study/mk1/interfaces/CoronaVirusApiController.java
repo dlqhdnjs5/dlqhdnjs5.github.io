@@ -104,7 +104,7 @@ public class CoronaVirusApiController {
 		}
 	}
 	
-	@GetMapping("/getCoronaConfirmedInfo2")
+	@GetMapping("/getCoronaConfirmedInfoSample")
 	public void getCoronaConfirmedInfo2(HttpServletRequest request, HttpServletResponse response) throws IOException  {
 		try {
 			
