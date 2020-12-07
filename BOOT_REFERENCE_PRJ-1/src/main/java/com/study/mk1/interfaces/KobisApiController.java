@@ -24,7 +24,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.study.mk1.controllers.SimpleTestController;
+import com.study.mk1.controllers.DefaultController;
 import com.study.mk1.data.KobisApiDTO;
 import com.study.mk1.data.KobisApiResult;
 

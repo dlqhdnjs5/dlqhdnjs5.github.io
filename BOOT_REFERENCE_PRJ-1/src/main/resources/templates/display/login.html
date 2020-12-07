@@ -1,22 +1,64 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>로그인</title>
-</head>
-<body>
-<h2>로그인</h2>
-<br>
-<form action="/loginProcesse" method="POST">
-아이디 : <input name="email"> 
-<br>
-비번 :  <input name="password">
-<br>
-<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> -->
-<button type="submit"> 버튼 </button> <br>
-<a href="signUpPage">회원가입</a>
-</form>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/emptyLayout">
+<th:block layout:fragment="content">
 
+<div class="row justify-content-center">
 
-</body>
+   <div class="col-xl-10 col-lg-12 col-md-9">
+
+       <div class="card o-hidden border-0 shadow-lg my-5">
+           <div class="card-body p-0">
+               <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                    <div class="col-lg-6">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Sign Up</h1>
+                            </div>
+                            <form action="/loginProcesse" method="POST">
+                                <div class="form-group">
+                                	<input id="email" name="email" class="form-control form-control-user" placeholder="아이디를 입력해주세요"> 
+                                </div>
+                                <div class="form-group">
+                                <!--     <input type="password" class="form-control form-control-user"
+                                        id="exampleInputPassword" placeholder="Password"> -->
+                                    <input id="password" name="password" class="form-control form-control-user" placeholder="비밀번호를 입력해주세요">
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox small">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                                        <label class="custom-control-label" for="customCheck">Remember
+                                            Me</label>
+                                    </div>
+                                </div>
+                                <br><br><br><br>
+                                <button type="submit" class="btn btn-primary  btn-block">login</button>
+                                <!-- <hr>  얇은 구분선 --> 
+                                <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Login with Google
+                                </a>
+                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                </a> -->
+                                <br><br><br><br><br><br><br>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="register.html">Create an Account!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</th:block>
 </html>

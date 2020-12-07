@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>404 ERROR</title>
-</head>
-<body>
-<h2>404 ERROR</h2>
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/defaultLayout">
+<th:block layout:fragment="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+	    <!-- 404 Error Text -->
+	    <div class="text-center">
+	        <div class="error mx-auto" data-text="404">404</div>
+	       	 페이지가 존재하지 않습니다.
+	    </div>
+    </div>
+</th:block>
 </html>

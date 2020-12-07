@@ -28,9 +28,9 @@ import com.study.mk1.interceptors.CustomHandlerImpl;
 import com.study.mk1.sequrity.SecurityUserDetailService;
 
 @Controller
-public class SimpleTestController {
+public class DefaultController {
 	
-	private static Logger log = LoggerFactory.getLogger(SimpleTestController.class);
+	private static Logger log = LoggerFactory.getLogger(DefaultController.class);
 	
 	@Autowired
 	MbrRepository mbrRepository;
@@ -56,6 +56,13 @@ public class SimpleTestController {
 			e.printStackTrace();
 		} 
 		
+	}
+	
+	@RequestMapping(value="/helloWolrd2")
+	public String helloWorld2(HttpServletRequest rquest , HttpServletResponse response)  {
+		
+		
+		return "fragments/bootStrapLogin";
 	}
 	
 	@RequestMapping(value= {"/home","/"})

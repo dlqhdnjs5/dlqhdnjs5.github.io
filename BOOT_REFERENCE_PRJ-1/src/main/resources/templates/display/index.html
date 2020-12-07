@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h2>main1</h2><br>
-<form action="/logout" method="POST">
-<button type="submit">LOGOUT</button>
-<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> -->
-</form>
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/defaultLayout">
+<th:block layout:fragment="content">
+	<div class="text-center">
+		<div class="error mx-auto" data-text="MAIN">MAIN</div>
+		준비중
+		<br>
+		<br>
+		<br>
+		
+		<form action="/logout" method="POST">
+		<button type="submit" class="btn btn-primary  ">LOGOUT</button>
+		<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> -->
+	</form>
+	</div>
+	
+</th:block>
 </html>

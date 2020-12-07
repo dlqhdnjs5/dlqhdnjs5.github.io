@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.study.mk1.controllers.SimpleTestController;
+import com.study.mk1.controllers.DefaultController;
 
 public class IOService {
 	
-	private static Logger log = LoggerFactory.getLogger(SimpleTestController.class);
+	private static Logger log = LoggerFactory.getLogger(DefaultController.class);
 	
 	@SuppressWarnings("unchecked")
 	public static boolean hasRole() {
