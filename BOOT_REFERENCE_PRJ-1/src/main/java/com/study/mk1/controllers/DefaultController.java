@@ -109,7 +109,12 @@ public class DefaultController {
 	
 	@RequestMapping(value="/join")
 	public String joinMbr(HttpServletRequest request , HttpServletResponse response,Mbr mbr) throws Exception {
+
 		
+		String[] mobileNo = mbr.getMobilNo().split("-");
+		mbr.setMbrMobAreaNo(mobileNo[0]);
+		mbr.setMbrMobTlofNo(mobileNo[1]);
+		mbr.setMbrMobTlofLstNo(mobileNo[2]);
 		
 		securityUserDetailService.joinMbr(mbr);
 		

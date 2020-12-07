@@ -31,4 +31,6 @@ public class Mbr extends AbstractEntity {
 	
 	String mbrGrdCd;
 	
+	String mobilNo;
+	
 }

@@ -7,12 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import org.springframework.security.core.context.SecurityContext;
 import com.study.mk1.controllers.DefaultController;
 
 public class IOService {
 	
-	private static Logger log = LoggerFactory.getLogger(DefaultController.class);
+	private static Logger log = LoggerFactory.getLogger(IOService.class);
 	
+	/* 롤을 가지고 있는지 체크*/
 	@SuppressWarnings("unchecked")
 	public static boolean hasRole() {
 		boolean hasRole = false;
@@ -35,6 +37,16 @@ public class IOService {
 			log.info("=======================================");
 		}
 		return hasRole;
+	}
+	
+	/* 스프링 시큐리티로 로그인된 사용자 세션정보를 얻는다. */
+	public static Object getCurrentUserDetail() {
+		SecurityContext context = SecurityContextHolder.getContext();
+		if (context == null || context.getAuthentication() == null) {
+			return null;
+		} else {
+			return context.getAuthentication().getPrincipal();
+		}
 	}
 
 }

@@ -12,9 +12,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.study.mk1.sequrity.SecurityAuthenticationFailureHandler;
+import com.study.mk1.sequrity.SecurityAuthenticationSuccessHandler;
 import com.study.mk1.sequrity.SecurityUserDetailService;
 
 @Configuration
@@ -35,8 +39,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 //	@Autowired
 //	private UserAuthenticationProvider authenticationProvider;
+	
 	@Autowired
 	private SecurityUserDetailService securityUserDetailService;
+	
+	@Autowired
+	private SecurityAuthenticationSuccessHandler securityAuthenticationSuccessHandler;
+	
+	@Autowired
+	private SecurityAuthenticationFailureHandler securityAuthenticationFailureHandler;
 	  
 	/*정적 자원에 대해서는 Security 설정을 적용하지 않는다*/	
 	
@@ -59,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 			.antMatchers("/css/**", "/js/**", "/img/**","/helloWolrd").permitAll()
+			.antMatchers(LOGIN_PAGE_URL.toString()).anonymous()
 			.antMatchers("/auth/admin/**","/","/home").hasAnyRole("ADMIN")
 			.antMatchers("/auth/**","/","/home").hasRole("USER")
 			.anyRequest().permitAll();
@@ -66,18 +78,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.formLogin()
 			.loginPage(LOGIN_PAGE_URL.toString())
+			.successHandler(securityAuthenticationSuccessHandler)
+			.failureHandler(securityAuthenticationFailureHandler)
 			.loginProcessingUrl(LOGIN_PROCESSING_URL.toString())
-			.failureUrl(LOGIN_FAIL)
-			.defaultSuccessUrl(SUCCESS_URL)
+			//.failureUrl(LOGIN_FAIL)
+			//.defaultSuccessUrl(SUCCESS_URL)
 			.usernameParameter(USER_NAME_PRAMETER)
 			.passwordParameter(PASS_PARAMETER)
 			.permitAll();
 		
+		
+
+
+		
 		http.logout()
 			.logoutUrl(LOGOUT_URL)
 			.logoutSuccessUrl(LOGIN_PAGE_URL)
+			.invalidateHttpSession(true) /*로그아웃시 세션 제거*/
 			.deleteCookies("JSESSIONID")
-			.permitAll();
+			.clearAuthentication(true) /*권한정보 제거*/
+			.permitAll()
+		.and()
+			.sessionManagement()
+			.maximumSessions(1)
+			.maxSessionsPreventsLogin(false)
+			.expiredUrl("/")
+			.sessionRegistry(sessionRegistry());
+		
 		
 		http.csrf().disable();
 		
@@ -98,6 +125,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
+	
+	 @Bean
+	    public SessionRegistry sessionRegistry() {
+	        return new SessionRegistryImpl();
+	    }
+
+
 
 
 
