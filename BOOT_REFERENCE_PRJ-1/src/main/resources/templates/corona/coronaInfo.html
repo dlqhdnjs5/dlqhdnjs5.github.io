@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/defaultLayout">
+<th:block layout:fragment="content">
+<div class="container-fluid">
+   <!-- Page Heading -->
+   <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+   <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+       For more information about DataTables, please visit the <a target="_blank"
+           href="https://datatables.net">official DataTables documentation</a>.</p>
+
+   <!-- DataTales Example -->
+   <div class="card shadow mb-4">
+       <div class="card-header py-3">
+           <h6 class="m-0 font-weight-bold text-primary">코로나 확진 정보</h6>
+       </div>
+       <div class="card-body">
+           <div class="table-responsive">
+               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                   <thead>
+                       <tr>
+                           <th>날짜</th>
+                           <th>시도명</th>
+                           <th>확진자 수</th>
+                           <th>사망자 수</th>
+                           <th>격리자 수</th>
+                           <th>격리 해제 수</th>
+                       </tr>
+                   </thead>
+                   <tfoot>
+                       <tr>
+                           <th>날짜</th>
+                           <th>시도명</th>
+                           <th>확진자 수</th>
+                           <th>사망자 수</th>
+                           <th>격리자 수</th>
+                           <th>격리 해제 수</th>
+                       </tr>
+                   </tfoot>
+                   <tbody id="tBody">
+                   </tbody>
+               </table>
+           </div>
+       </div>
+   </div>
+
+</div>
+</th:block>
+</html>
+<script>
+
+$(document).ready(function(){
+	$.ajax({
+		type : 'GET',
+		url  : '/getCoronaConfirmedInfoXmlParse'
+	})
+	.done(function(data,stat,xhr){
+		
+		$.each(data, function(idx,itm){
+			$('#tBody').append(
+					'<tr>' +
+					'<td>'+itm.stdDay+'</td>' +
+					'<td>'+itm.gubun+'</td>' +
+					'<td>'+itm.defCnt+'</td>' +
+					'<td>'+itm.deathCnt+'</td>' +
+					'<td>'+itm.isolIngCnt+'</td>' +
+					'<td>'+itm.isolClearCnt+'</td>' +
+					'</tr>'
+			)
+		});
+		console.log(data)
+	})
+	.fail(function(stat,xhr,err){
+		console.log('fail')
+		console.log(data)
+	})
+	.then(function(data,stat,xhr){
+		console.log('then')
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+});
+
+</script>

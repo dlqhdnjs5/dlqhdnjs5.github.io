@@ -11,7 +11,9 @@ import java.net.ProtocolException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -125,9 +127,12 @@ public class CoronaVirusApiController {
 	 * @param response
 	 */
 	@GetMapping("/getCoronaConfirmedInfoXmlParse")
-	public void getCoronaConfirmedInfoXmlParse(HttpServletRequest request, HttpServletResponse response)  {
+	public List<Map<String,String>> getCoronaConfirmedInfoXmlParse(HttpServletRequest request, HttpServletResponse response)  {
 		
+		
+		List<Map<String,String>> resultList  = new ArrayList<>();
 		try {
+			
 			
 			StringBuilder urlBuilder = new StringBuilder(bogunUrl); /*URL*/
 	        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + key); /*Service Key*/
@@ -151,7 +156,9 @@ public class CoronaVirusApiController {
 	        for(int temp = 0; temp < nList.getLength(); temp++){		
 	        	Node nNode = nList.item(temp);
 	        	if(nNode.getNodeType() == Node.ELEMENT_NODE){
-	        						
+	        		
+	        		Map result = new HashMap();
+	        		
 	        		Element eElement = (Element) nNode;
 	        		log.info("날짜 : " +getTagValue("stdDay", eElement));
 	        		log.info("시도명 : " +getTagValue("gubun", eElement));
@@ -161,6 +168,16 @@ public class CoronaVirusApiController {
 	        		log.info("격리 해제 수 : "  +getTagValue("isolClearCnt", eElement));
 	        		log.info("전일대비 증감수 : "+getTagValue("incDec", eElement));
 	        		log.info("##############################");
+	        		
+	        		result.put("stdDay", getTagValue("stdDay", eElement));
+	        		result.put("gubun", getTagValue("gubun", eElement));
+	        		result.put("defCnt", getTagValue("defCnt", eElement));
+	        		result.put("deathCnt", getTagValue("deathCnt", eElement));
+	        		result.put("isolIngCnt", getTagValue("isolIngCnt", eElement));
+	        		result.put("isolClearCnt", getTagValue("isolClearCnt", eElement));
+	        		result.put("incDec", getTagValue("incDec", eElement));
+	        		
+	        		resultList.add(result);
 	    
 	        	}	
 	        }
@@ -176,6 +193,8 @@ public class CoronaVirusApiController {
 			e.printStackTrace();
 			
 		}
+		
+		return resultList;
 	}
 	
 	private static String getTagValue(String tag, Element eElement) {
