@@ -38,26 +38,6 @@ public class DefaultController {
 	@Autowired
 	SecurityUserDetailService securityUserDetailService;
 	
-	@RequestMapping(value="/helloWolrd")
-	public void helloWorld(HttpServletRequest rquest , HttpServletResponse response)  {
-		
-		
-		try(
-			Writer writer = response.getWriter();
-			PrintWriter	wp =response.getWriter();
-			)
-		{
-			
-			writer.write("helloWolrd!");
-			wp.write("helloWolrd2!");
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
-	}
-	
 	@RequestMapping(value="/helloWolrd2")
 	public String helloWorld2(HttpServletRequest rquest , HttpServletResponse response)  {
 		

@@ -5,5 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MbrJpaRepository extends JpaRepository<MbrJpa, Long>{
-
+	
+	/**
+	 * mbrId 로 권한과 회원정보 가져오기
+	 * @param mbrId
+	 * @return
+	 */
+	MbrJpa findByMbrId(String mbrId);
 }
