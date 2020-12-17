@@ -22,12 +22,13 @@ import com.study.mk1.data.MbrAuthEnum;
 import com.study.mk1.data.MbrInfoDTO;
 import com.study.mk1.entity.Auth;
 import com.study.mk1.entity.Mbr;
+import com.study.mk1.jpa.mbr.MbrJpa;
 
 @Component
 public class SecurityUserDetailService implements UserDetailsService {
 	
-	private static String ROLE_USER = "1";
-	private static String ROLE_ADMIN = "2";
+	private static long ROLE_USER = 1;
+	private static long ROLE_ADMIN = 2;
 	
 	private static Logger log = LoggerFactory.getLogger(SecurityUserDetailService.class);
 	
@@ -66,6 +67,20 @@ public class SecurityUserDetailService implements UserDetailsService {
 		mbrInfoDTO.setMbrAuthMappingSeq(ROLE_USER);
 		
 		mbrComponent.joinMbr(mbrInfoDTO);
+		
+	}
+	
+	public void joinMbr(MbrInfoDTO mbrInfoDto ) throws Exception {
+		
+		log.debug(this.getClass().getName() + ".mbrJoin() --> param : {}",mbrInfoDto.getMbrJpa());
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		mbrInfoDto.getMbrJpa().setMbrPw(passwordEncoder.encode(mbrInfoDto.getMbrJpa().getMbrPw()));
+		mbrInfoDto.getMbrJpa().setMbrGrdCd(MbrAuthEnum.mbrGrdCd.GNRL.toString());
+		mbrInfoDto.getMbrJpa().setMbrStatCd(MbrAuthEnum.mbrStatCd.AVAIL.toString());
+		mbrInfoDto.getMbrJpa().setMbrTpCd(MbrAuthEnum.mbrTpCd.GNRL.toString());
+		mbrInfoDto.setMbrAuthMappingSeq(ROLE_USER);
+		
+		mbrComponent.joinMbr(mbrInfoDto);
 		
 	}
 

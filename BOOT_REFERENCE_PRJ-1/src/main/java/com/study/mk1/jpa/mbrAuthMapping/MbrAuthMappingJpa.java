@@ -21,10 +21,13 @@ import com.study.mk1.jpa.mbr.MbrJpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "mbr_auth_mapping")
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class MbrAuthMappingJpa extends AbstractEntity{
 	
 	@Id
@@ -40,50 +43,6 @@ public class MbrAuthMappingJpa extends AbstractEntity{
 	
 	
 	
-	public MbrAuthMappingJpa() {
-		
-	}
-	
-	public long getMbrAuthSeq() {
-		return mbrAuthSeq;
-	}
-
-	public void setMbrAuthSeq(long mbrAuthSeq) {
-		this.mbrAuthSeq = mbrAuthSeq;
-	}
-
-	public long getMbrSeq() {
-		return mbrSeq;
-	}
-
-	public void setMbrSeq(long mbrSeq) {
-		this.mbrSeq = mbrSeq;
-	}
-
-	public long getAuthSeq() {
-		return authSeq;
-	}
-
-	public void setAuthSeq(long authSeq) {
-		this.authSeq = authSeq;
-	}
-
-	public MbrJpa getMbrJpa() {
-		return mbrJpa;
-	}
-
-	public void setMbrJpa(MbrJpa mbrJpa) {
-		this.mbrJpa = mbrJpa;
-	}
-
-	public AuthJpa getAuthJpa() {
-		return authJpa;
-	}
-
-	public void setAuthJpa(AuthJpa authJpa) {
-		this.authJpa = authJpa;
-	}
-
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "mbr_seq" , updatable = false, insertable = false)
 	MbrJpa mbrJpa;

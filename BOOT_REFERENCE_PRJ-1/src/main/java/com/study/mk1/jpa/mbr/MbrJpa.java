@@ -23,6 +23,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "mbr")
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class  MbrJpa extends AbstractEntity{
 	
 	@Id
@@ -67,115 +69,5 @@ public class  MbrJpa extends AbstractEntity{
 	
 	@OneToOne(fetch = FetchType.LAZY,mappedBy = "mbrJpa")
 	MbrAuthMappingJpa mam;
-	
-	 MbrJpa() {
-		
-	}
-
-	public long getMbrSeq() {
-		return mbrSeq;
-	}
-
-	public void setMbrSeq(long mbrSeq) {
-		this.mbrSeq = mbrSeq;
-	}
-
-	public String getMbrId() {
-		return mbrId;
-	}
-
-	public void setMbrId(String mbrId) {
-		this.mbrId = mbrId;
-	}
-
-	public String getMbrNm() {
-		return mbrNm;
-	}
-
-	public void setMbrNm(String mbrNm) {
-		this.mbrNm = mbrNm;
-	}
-
-	public String getMbrPw() {
-		return mbrPw;
-	}
-
-	public void setMbrPw(String mbrPw) {
-		this.mbrPw = mbrPw;
-	}
-
-	public String getMbrEmail() {
-		return mbrEmail;
-	}
-
-	public void setMbrEmail(String mbrEmail) {
-		this.mbrEmail = mbrEmail;
-	}
-
-	public String getMbrStatCd() {
-		return mbrStatCd;
-	}
-
-	public void setMbrStatCd(String mbrStatCd) {
-		this.mbrStatCd = mbrStatCd;
-	}
-
-	public String getMbrTpCd() {
-		return mbrTpCd;
-	}
-
-	public void setMbrTpCd(String mbrTpCd) {
-		this.mbrTpCd = mbrTpCd;
-	}
-
-	public String getMbrMobNationNo() {
-		return mbrMobNationNo;
-	}
-
-	public void setMbrMobNationNo(String mbrMobNationNo) {
-		this.mbrMobNationNo = mbrMobNationNo;
-	}
-
-	public String getMbrMobAreaNo() {
-		return mbrMobAreaNo;
-	}
-
-	public void setMbrMobAreaNo(String mbrMobAreaNo) {
-		this.mbrMobAreaNo = mbrMobAreaNo;
-	}
-
-	public String getMbrMobTlofNo() {
-		return mbrMobTlofNo;
-	}
-
-	public void setMbrMobTlofNo(String mbrMobTlofNo) {
-		this.mbrMobTlofNo = mbrMobTlofNo;
-	}
-
-	public String getMbrMobTlofLstNo() {
-		return mbrMobTlofLstNo;
-	}
-
-	public void setMbrMobTlofLstNo(String mbrMobTlofLstNo) {
-		this.mbrMobTlofLstNo = mbrMobTlofLstNo;
-	}
-
-	public String getMbrGrdCd() {
-		return mbrGrdCd;
-	}
-
-	public void setMbrGrdCd(String mbrGrdCd) {
-		this.mbrGrdCd = mbrGrdCd;
-	}
-
-	public MbrAuthMappingJpa getMam() {
-		return mam;
-	}
-
-	public void setMam(MbrAuthMappingJpa mam) {
-		this.mam = mam;
-	}
-	
-
 	
 }

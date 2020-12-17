@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import com.study.mk1.cmp.repositorys.AuthRepository;
 import com.study.mk1.cmp.repositorys.MbrRepository;
 import com.study.mk1.data.MbrInfoDTO;
+import com.study.mk1.jpa.mbr.MbrJpa;
+import com.study.mk1.jpa.mbr.MbrJpaRepository;
+import com.study.mk1.jpa.mbrAuthMapping.MbrAuthMappingJpa;
+import com.study.mk1.jpa.mbrAuthMapping.MbrAuthMappingJpaRepository;
 import com.study.mk1.sequrity.SecurityUserDetailService;
 
 @Service
@@ -21,6 +25,12 @@ public class MbrService {
 	@Autowired
 	AuthRepository authRepository;
 	
+	@Autowired
+	MbrJpaRepository MbrJpaRepository;
+	
+	@Autowired
+	MbrAuthMappingJpaRepository mbrAuthMappingJpaRepository;
+	
 	/**
 	 * 회원가입
 	 */
@@ -28,9 +38,18 @@ public class MbrService {
 		
 		try {
 			
-			mbrRepository.insertMbr(mbrInfoDTO.getMbr());
+			/*
+			 * - mybatis
+			 * mbrRepository.insertMbr(mbrInfoDTO.getMbr());
+			 *  authRepository.insertMbrAuthMappingUseSelectKey(mbrInfoDTO);
+			 *  
+			 *  */
 			
-			authRepository.insertMbrAuthMappingUseSelectKey(mbrInfoDTO);
+			MbrJpa mbrJpa = MbrJpaRepository.save(mbrInfoDTO.getMbrJpa());
+			MbrAuthMappingJpa mam = new MbrAuthMappingJpa(); 
+			mam.setMbrSeq(mbrJpa.getMbrSeq());
+			mam.setAuthSeq(mbrInfoDTO.getMbrAuthMappingSeq());
+			mbrAuthMappingJpaRepository.save(mam);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

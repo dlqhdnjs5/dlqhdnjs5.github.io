@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.security.core.GrantedAuthority;
 import com.study.mk1.cmp.repositorys.MbrRepository;
+import com.study.mk1.data.MbrInfoDTO;
 import com.study.mk1.entity.Mbr;
 import com.study.mk1.interceptors.CustomHandlerImpl;
+import com.study.mk1.jpa.mbr.MbrJpa;
 import com.study.mk1.sequrity.SecurityUserDetailService;
 
 @Controller
@@ -88,15 +90,29 @@ public class DefaultController {
 	}
 	
 	@RequestMapping(value="/join")
-	public String joinMbr(HttpServletRequest request , HttpServletResponse response,Mbr mbr) throws Exception {
-
+	public String joinMbr(HttpServletRequest request , HttpServletResponse response, MbrInfoDTO mbrInfoDto) throws Exception {
 		
-		String[] mobileNo = mbr.getMobilNo().split("-");
-		mbr.setMbrMobAreaNo(mobileNo[0]);
-		mbr.setMbrMobTlofNo(mobileNo[1]);
-		mbr.setMbrMobTlofLstNo(mobileNo[2]);
-		
-		securityUserDetailService.joinMbr(mbr);
+		try {
+			
+			if(mbrInfoDto != null && mbrInfoDto.getMbrJpa() != null) {
+				
+				String[] mobilNo = mbrInfoDto.getMobilNo().split("-");
+				mbrInfoDto.getMbrJpa().setMbrMobAreaNo(mobilNo[0]);
+				mbrInfoDto.getMbrJpa().setMbrMobTlofNo(mobilNo[1]);
+				mbrInfoDto.getMbrJpa().setMbrMobTlofLstNo(mobilNo[2]);
+				
+				securityUserDetailService.joinMbr(mbrInfoDto);
+				
+			}else {
+				NullPointerException e = new NullPointerException();
+				throw e;
+			}
+			
+		}catch(NullPointerException e) {
+			log.warn("NullPointerException :  {}",mbrInfoDto);
+		}catch(Exception e) {
+			throw new Exception();
+		}
 		
 		return "redirect:/login";
 	}
