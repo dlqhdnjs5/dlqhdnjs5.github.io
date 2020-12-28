@@ -23,7 +23,7 @@
                                 	<input id="email" name="email" class="form-control form-control-user" placeholder="아이디를 입력해주세요"> 
                                 </div>
                                 <div class="form-group">
-                                    <input id="password" name="password" class="form-control form-control-user" placeholder="비밀번호를 입력해주세요">
+                                    <input id="password" type="password" name="password" class="form-control form-control-user" placeholder="비밀번호를 입력해주세요">
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox small">
@@ -35,23 +35,12 @@
                                 <br><br><br><br>
                                 <button   class="btn btn-primary  btn-block">Login</button>
                                 <a  href="/signUpPage" class="btn btn-primary  btn-block">Sign up</a>
-<!--                                 <a href="javascript:void(0);" class="btn btn-primary  btn-block">login</a> -->
-                                <!-- <hr>  얇은 구분선 --> 
-                                <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Login with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                </a> -->
                                 <br><br><br><br><br><br><br>
                             </form>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div>
-<!--                             <div class="text-center"> -->
-<!--                                 <a class="small" href="register.html">Create an Account!</a> -->
-<!--                             </div> -->
                         </div>
                     </div>
                 </div>
@@ -63,9 +52,8 @@
 </th:block>
 </html>
 <script>
-
 $(document).ready(function(){
-	
+		
 	$.ajax({
 		url : '/authenticated',
 		type : 'GET',
@@ -75,42 +63,34 @@ $(document).ready(function(){
 		},
 		error : function(data){
 		}
-	})
-	
-});
-
-$('#loginForm').submit(function(event){
-	
-	event.preventDefault();
-	
-	var $form = $(this);
-	$.ajax({
-		url  : $form.attr('action'),
-		data : $form.serialize(),
-		type : $form.attr('method'),
-		success : function(data , xhr , error) {
-			console.log(data);
-			console.log(xhr);
-			var result = JSON.parse(data);
-			if(result.success){
-				location.href = result.prevPage;
-			}else{
-				alert(result.message);
-			}
-			console.log(result);
-			
-			console.log(data.isSuccess);
-			console.log(data.success);
-		},
-		error : function(data) {
-			console.log(data);
-			alert('시스템 오류가 발생하였습니다.')
-		}
+	});
 		
-	})
+	});
 	
+	$('#loginForm').submit(function(event){
+		
+		event.preventDefault();
+		
+		var $form = $(this);
+		$.ajax({
+			url  : $form.attr('action'),
+			data : $form.serialize(),
+			type : $form.attr('method'),
+			success : function(data , xhr , error) {
+				var result = JSON.parse(data);
+				if(result.success){
+					location.href = result.prevPage;
+				}else{
+					alert(result.message);
+				}
+			},
+			error : function(data) {
+				console.log(data);
+				alert('시스템 오류가 발생하였습니다.')
+			}
+			
+		});
 	
-})
-
-
+	});
+	
 </script>

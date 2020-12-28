@@ -67,15 +67,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 HttpServletRequest 접근에 대한 제한권한을 획득.*/
 	@Override
 	protected void configure(HttpSecurity http ) throws Exception {
-		
+	
 		http.authorizeRequests()
-			.antMatchers("/css/**", "/js/**", "/img/**","/helloWolrd").permitAll()
-			.antMatchers(LOGIN_PAGE_URL.toString()).anonymous()
-			.antMatchers("/auth/admin/**","/","/home").hasAnyRole("ADMIN")
-			.antMatchers("/auth/**","/","/home").hasRole("USER")
+			.antMatchers("/css/**", "/js/**", "/img/**").permitAll()
+			.antMatchers(LOGIN_PAGE_URL.toString()).permitAll()
+			.antMatchers("/auth/admin/**").hasRole("ADMIN")
+			.antMatchers("/auth/**","/","/home","/ui/**").hasAnyRole("USER","ADMIN")
+			.antMatchers("/**").permitAll()
 			.anyRequest().permitAll();
-			//.anyRequest().authenticated();
-		
+
+//		
 		http.formLogin()
 			.loginPage(LOGIN_PAGE_URL.toString())
 			.successHandler(securityAuthenticationSuccessHandler)

@@ -12,4 +12,11 @@ public interface MbrJpaRepository extends JpaRepository<MbrJpa, Long>{
 	 * @return
 	 */
 	MbrJpa findByMbrId(String mbrId);
+	
+	/**
+	 * mbrId 로 갯수 확인
+	 * @param mbrId
+	 * @return
+	 */
+	long countByMbrId(String mbrId);
 }

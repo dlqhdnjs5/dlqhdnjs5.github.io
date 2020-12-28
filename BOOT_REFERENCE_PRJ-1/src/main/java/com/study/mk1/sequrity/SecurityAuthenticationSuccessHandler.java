@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -24,7 +25,7 @@ public class SecurityAuthenticationSuccessHandler extends  SimpleUrlAuthenticati
 	/**
 	 * 로그인이 성공하고나서 로직
 	 */
-   @Override
+    @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
     	
@@ -49,6 +50,26 @@ public class SecurityAuthenticationSuccessHandler extends  SimpleUrlAuthenticati
         response.getWriter().print(mapper.writeValueAsString(securityResult));
         response.getWriter().flush();
     }
+	
+	/*@Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, 
+        Authentication authentication) throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        if (session != null) {
+            String redirectUrl = (String) session.getAttribute("prevPage");
+            if (redirectUrl != null) {
+                session.removeAttribute("prevPage");
+                getRedirectStrategy().sendRedirect(request, response, redirectUrl);
+            } else {
+                super.onAuthenticationSuccess(request, response, authentication);
+            }
+        } else {
+            super.onAuthenticationSuccess(request, response, authentication);
+        }
+    }*/
+
+
    
    /**
     * 로그인 전의 URL 조회

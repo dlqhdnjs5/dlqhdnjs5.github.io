@@ -23,5 +23,13 @@ public class MbrComponetImpl implements MbrComponent {
 		
 	}
 	
+	/**
+	 * 아이디 중복체크
+	 */
+	public boolean checkMbrId(String mbrId) {
+		
+		return mbrService.checkMbrId(mbrId);
+		
+	}
 
 }

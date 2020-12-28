@@ -59,5 +59,16 @@ public class MbrService {
 		
 		
 	}
+	
+	/**
+	 * mbrId 로 아이디 중복체크
+	 * true  : 중복 없음
+	 * false : 중복
+	 * @param mbrId
+	 * @return
+	 */
+	public boolean checkMbrId(String mbrId) {
+		return MbrJpaRepository.countByMbrId(mbrId) < 1 ? true : false;
+	}
 
 }

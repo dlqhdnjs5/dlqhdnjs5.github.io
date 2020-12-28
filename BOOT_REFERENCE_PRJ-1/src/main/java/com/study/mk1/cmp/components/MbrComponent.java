@@ -13,4 +13,11 @@ public interface MbrComponent {
 	 */
 	public void joinMbr( MbrInfoDTO mbrInfoDTO ) throws Exception;
 	
+	/**
+	 * 아이디 중복체크
+	 * @param mbrId
+	 * @return
+	 */
+	public boolean checkMbrId(String mbrId);
+	
 }

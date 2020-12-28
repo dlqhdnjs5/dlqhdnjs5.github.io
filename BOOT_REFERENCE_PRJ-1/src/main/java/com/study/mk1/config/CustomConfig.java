@@ -1,11 +1,15 @@
 package com.study.mk1.config;
 
+import javax.servlet.http.HttpSessionListener;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.study.mk1.common.SessionListener;
 import com.study.mk1.interceptors.CustomHandlerImpl;
 
 @Configuration
@@ -30,5 +34,10 @@ public class CustomConfig implements WebMvcConfigurer{
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
     }
+	
+	@Bean
+	public HttpSessionListener httpSessionListener(){
+	    return new SessionListener();
+	}
 
 }

@@ -40,13 +40,6 @@ public class DefaultController {
 	@Autowired
 	SecurityUserDetailService securityUserDetailService;
 	
-	@RequestMapping(value="/helloWolrd2")
-	public String helloWorld2(HttpServletRequest rquest , HttpServletResponse response)  {
-		
-		
-		return "fragments/bootStrapLogin";
-	}
-	
 	@RequestMapping(value= {"/home","/"})
 	public String home(HttpServletRequest rquest , HttpServletResponse response)  {
 		
