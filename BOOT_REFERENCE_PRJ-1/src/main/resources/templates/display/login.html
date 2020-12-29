@@ -2,8 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/emptyLayout">
+<head>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
 <th:block layout:fragment="content">
-
 <div class="row justify-content-center">
 
    <div class="col-xl-10 col-lg-12 col-md-9">
@@ -19,6 +22,7 @@
                                 <h1 class="h4 text-gray-900 mb-4">Login</h1>
                             </div>
                             <form id="loginForm" action="/loginProcesse" method="POST">
+                            	
                                 <div class="form-group">
                                 	<input id="email" name="email" class="form-control form-control-user" placeholder="아이디를 입력해주세요"> 
                                 </div>
@@ -71,11 +75,20 @@ $(document).ready(function(){
 		
 		event.preventDefault();
 		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		if(!checkInput()) return;
+		
 		var $form = $(this);
 		$.ajax({
 			url  : $form.attr('action'),
 			data : $form.serialize(),
 			type : $form.attr('method'),
+			beforeSend : function(xhr)
+            {   /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				xhr.setRequestHeader(header, token);
+            },
 			success : function(data , xhr , error) {
 				var result = JSON.parse(data);
 				if(result.success){
@@ -92,5 +105,26 @@ $(document).ready(function(){
 		});
 	
 	});
+	
+	function checkInput(){
+		
+		var email = $('input[name="email"]').val();
+		email = email.trim();
+		
+		var password = $('input[name="password"]').val();
+		password = password.trim();
+		
+		if(email == ''){
+			alert('아이디를 입력해주세요');	
+			return false;
+		}
+		
+		if(password == ''){
+			alert('비밀번호를 입력해주세요');
+			return false;
+		}
+		
+		return true;
+	}
 	
 </script>

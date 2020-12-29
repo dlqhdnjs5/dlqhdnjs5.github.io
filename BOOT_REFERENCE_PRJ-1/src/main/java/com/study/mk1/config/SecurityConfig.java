@@ -107,7 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionRegistry(sessionRegistry());
 		
 		
-		http.csrf().disable();
+		http.csrf();
 		
 	}
 	 /*AuthenticationManager()를 획득하기 위해 AuthenticationManager()의 기본 구현에 사용. 

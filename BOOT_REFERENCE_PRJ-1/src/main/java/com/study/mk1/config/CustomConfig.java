@@ -4,6 +4,8 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -39,5 +41,14 @@ public class CustomConfig implements WebMvcConfigurer{
 	public HttpSessionListener httpSessionListener(){
 	    return new SessionListener();
 	}
+	
+	/*스케쥴러 스레드 풀*/
+	@Bean public TaskScheduler poolScheduler() { 
+		ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler(); 
+		threadPoolTaskScheduler.setPoolSize(Runtime.getRuntime().availableProcessors() * 5); 
+		threadPoolTaskScheduler.setThreadNamePrefix("schaduler thread pool"); 
+		return threadPoolTaskScheduler; 
+	}
+
 
 }

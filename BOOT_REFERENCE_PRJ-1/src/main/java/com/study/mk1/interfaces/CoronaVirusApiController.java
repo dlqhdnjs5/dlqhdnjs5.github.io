@@ -11,9 +11,12 @@ import java.net.ProtocolException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +41,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -50,6 +54,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 @RestController
+@RequestMapping("/inf/api")
 public class CoronaVirusApiController {
 
 	/**
@@ -133,13 +138,19 @@ public class CoronaVirusApiController {
 		List<Map<String,String>> resultList  = new ArrayList<>();
 		try {
 			
+			Date dDate = new Date();
+			dDate = new Date(dDate.getTime()+(1000*60*60*24*-3));
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+			String yesterday = sdf.format(dDate);
+
+			
 			
 			StringBuilder urlBuilder = new StringBuilder(bogunUrl); /*URL*/
 	        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + key); /*Service Key*/
 	        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
 	        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
-	        urlBuilder.append("&" + URLEncoder.encode("startCreateDt","UTF-8") + "=" + URLEncoder.encode("20200410", "UTF-8")); /*검색할 생성일 범위의 시작*/
-	        urlBuilder.append("&" + URLEncoder.encode("endCreateDt","UTF-8") + "=" + URLEncoder.encode("20200410", "UTF-8")); /*검색할 생성일 범위의 종료*/
+	        urlBuilder.append("&" + URLEncoder.encode("startCreateDt","UTF-8") + "=" + URLEncoder.encode(yesterday, "UTF-8")); /*검색할 생성일 범위의 시작*/
+	        urlBuilder.append("&" + URLEncoder.encode("endCreateDt","UTF-8") + "=" + URLEncoder.encode(yesterday, "UTF-8")); /*검색할 생성일 범위의 종료*/
 	        URL url = new URL(urlBuilder.toString());
 	        
 	        /**
@@ -160,6 +171,8 @@ public class CoronaVirusApiController {
 	        		Map result = new HashMap();
 	        		
 	        		Element eElement = (Element) nNode;
+	        		String stdDt = getTagValue("stdDay", eElement);
+	        		stdDt = stdDt.replaceAll("[^0-9]","");
 	        		log.info("날짜 : " +getTagValue("stdDay", eElement));
 	        		log.info("시도명 : " +getTagValue("gubun", eElement));
 	        		log.info("확진자수 : "  +getTagValue("defCnt", eElement));
@@ -169,7 +182,7 @@ public class CoronaVirusApiController {
 	        		log.info("전일대비 증감수 : "+getTagValue("incDec", eElement));
 	        		log.info("##############################");
 	        		
-	        		result.put("stdDay", getTagValue("stdDay", eElement));
+	        		result.put("stdDay", stdDt);
 	        		result.put("gubun", getTagValue("gubun", eElement));
 	        		result.put("defCnt", getTagValue("defCnt", eElement));
 	        		result.put("deathCnt", getTagValue("deathCnt", eElement));
@@ -195,6 +208,90 @@ public class CoronaVirusApiController {
 		}
 		
 		return resultList;
+	}
+	
+	/**
+	 * 확진자 관련 정보 Api xml 문서 파싱
+	 * @param request
+	 * @param response
+	 */
+	@GetMapping("/getCoronaConfirmedInfoXmlParse2")
+	public ResponseEntity<List<Map<String,String>>> getCoronaConfirmedInfoXmlParse2(HttpServletRequest request, HttpServletResponse response)  {
+		
+		
+		List<Map<String,String>> resultList  = new ArrayList<>();
+		try {
+			
+			Date dDate = new Date();
+			dDate = new Date(dDate.getTime()+(1000*60*60*24*-1));
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+			String yesterday = sdf.format(dDate);
+
+			
+			
+			StringBuilder urlBuilder = new StringBuilder(bogunUrl); /*URL*/
+	        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + key); /*Service Key*/
+	        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+	        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+	        urlBuilder.append("&" + URLEncoder.encode("startCreateDt","UTF-8") + "=" + URLEncoder.encode(yesterday, "UTF-8")); /*검색할 생성일 범위의 시작*/
+	        urlBuilder.append("&" + URLEncoder.encode("endCreateDt","UTF-8") + "=" + URLEncoder.encode(yesterday, "UTF-8")); /*검색할 생성일 범위의 종료*/
+	        URL url = new URL(urlBuilder.toString());
+	        
+	        /**
+	         * xml 파싱
+	         */
+	        DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+	        DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
+	        Document doc = dBuilder.parse(url.toString());
+	        
+	        doc.getDocumentElement().normalize();
+	        NodeList nList = doc.getElementsByTagName("item");
+	        System.out.println("파싱할 리스트 수 : "+ nList.getLength()); 
+	        
+	        for(int temp = 0; temp < nList.getLength(); temp++){		
+	        	Node nNode = nList.item(temp);
+	        	if(nNode.getNodeType() == Node.ELEMENT_NODE){
+	        		
+	        		Map result = new HashMap();
+	        		
+	        		Element eElement = (Element) nNode;
+	        		String stdDt = getTagValue("stdDay", eElement);
+	        		stdDt = stdDt.replaceAll("[^0-9]","");
+	        		log.info("날짜 : " +getTagValue("stdDay", eElement));
+	        		log.info("시도명 : " +getTagValue("gubun", eElement));
+	        		log.info("확진자수 : "  +getTagValue("defCnt", eElement));
+	        		log.info("사망자수 : "+getTagValue("deathCnt", eElement));
+	        		log.info("격리자 수 : "  +getTagValue("isolIngCnt", eElement));
+	        		log.info("격리 해제 수 : "  +getTagValue("isolClearCnt", eElement));
+	        		log.info("전일대비 증감수 : "+getTagValue("incDec", eElement));
+	        		log.info("##############################");
+	        		
+	        		result.put("stdDay", stdDt);
+	        		result.put("gubun", getTagValue("gubun", eElement));
+	        		result.put("defCnt", getTagValue("defCnt", eElement));
+	        		result.put("deathCnt", getTagValue("deathCnt", eElement));
+	        		result.put("isolIngCnt", getTagValue("isolIngCnt", eElement));
+	        		result.put("isolClearCnt", getTagValue("isolClearCnt", eElement));
+	        		result.put("incDec", getTagValue("incDec", eElement));
+	        		
+	        		resultList.add(result);
+	    
+	        	}	
+	        }
+	
+	        
+			
+		} catch (HttpClientErrorException | HttpServerErrorException e) {
+			
+			e.printStackTrace();
+			
+        }catch(Exception e) {
+        	
+			e.printStackTrace();
+			
+		}
+		
+		return new ResponseEntity<List<Map<String,String>>>(resultList,HttpStatus.OK);
 	}
 	
 	private static String getTagValue(String tag, Element eElement) {

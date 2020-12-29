@@ -5,10 +5,8 @@
 <th:block layout:fragment="content">
 <div class="container-fluid">
    <!-- Page Heading -->
-   <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-   <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-       For more information about DataTables, please visit the <a target="_blank"
-           href="https://datatables.net">official DataTables documentation</a>.</p>
+   <h1 class="h3 mb-2 text-gray-800">Corona Info</h1>
+   <p class="mb-4">Scheduler를 통해 매일  오후 10시 전날의 공공기관(보건복지부) 의 데이터를  RESTful API로 가져와 DB에 저장후 조회  </p>
 
    <!-- DataTales Example -->
    <div class="card shadow mb-4">
@@ -43,6 +41,22 @@
                </table>
            </div>
        </div>
+       <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+       	<div class="row">
+			<div class="col-sm-12 col-md-7">
+				<div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+		       	<ul class="pagination">
+		       		<li class="paginate_button page-item previous disabled" id="dataTable_previous">
+		       			<a href="javascript:movePageBtn('prev')" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+		       		</li>
+		       		<li class="paginate_button page-item next" id="dataTable_next">
+		       			<a href="javascript:movePageBtn('next')" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+		       		</li>
+		     	 </ul>
+		      	</div>
+			</div>
+       	</div>
+       </div>
    </div>
 
 </div>
@@ -51,41 +65,105 @@
 <script>
 
 $(document).ready(function(){
+	
+	getCoronaInfo(0);
+	
+});
+
+
+function movePageBtn(stat){
+	
+	var $li;
+	var currentPage;
+	
+	if(stat == 'prev'){
+		$li = $('.paginate_button.page-item.num').filter('.active');
+		currentPage = $li[0].innerText;
+		getCoronaInfo(currentPage-2);
+	}else{
+		$li = $('.paginate_button.page-item.num').filter('.active');
+		currentPage = $li[0].innerText;
+		getCoronaInfo(currentPage);
+	}
+	
+}
+
+function getCoronaInfo(pageNo){
+	
+	$('#tBody').empty();
+	$('.paginate_button.page-item.num').remove();
+	
 	$.ajax({
 		type : 'GET',
-		url  : '/getCoronaConfirmedInfoXmlParse'
+		url  : '/corona/getCoronaInfo',
+		data : {
+			'page' : pageNo,
+			'size' : 10
+			}
 	})
 	.done(function(data,stat,xhr){
+		console.log(data);
 		
-		$.each(data, function(idx,itm){
+		var pageResult = data;
+		if(pageResult.first){
+			document.querySelector('#dataTable_previous').classList.add('disabled');
+		}else{
+			document.querySelector('#dataTable_previous').classList.remove('disabled');
+		}
+		
+		if(pageResult.last){
+			document.querySelector('#dataTable_next').classList.add('disabled');
+		}else{
+			document.querySelector('#dataTable_next').classList.remove('disabled');
+		}
+		
+		for(var i = 0 ; i < pageResult.totalPages ; i++){
+			
+			if(pageResult.number == i){
+				$('#dataTable_next').before(
+						'<li class="paginate_button page-item num active">' +
+						'<a href="javascript:getCoronaInfo('+i+');" aria-controls="dataTable" data-dt-idx="'+(i+1)+'" tabindex="0" class="page-link">'+(i+1)+'</a>' +
+						'</li>'
+						);
+			}else{
+				$('#dataTable_next').before(
+						'<li class="paginate_button page-item num">' +
+						'<a href="javascript:getCoronaInfo('+i+');"  aria-controls="dataTable" data-dt-idx="'+(i+1)+'" tabindex="0" class="page-link">'+(i+1)+'</a>' +
+						'</li>'
+						);
+			}
+		
+		}
+		
+		$.each(pageResult.content, function(idx,itm){
 			$('#tBody').append(
 					'<tr>' +
-					'<td>'+itm.stdDay+'</td>' +
-					'<td>'+itm.gubun+'</td>' +
+					'<td>'+getFormatDate(itm.createdDt)+'</td>' +
+					'<td>'+itm.cityNm+'</td>' +
 					'<td>'+itm.defCnt+'</td>' +
 					'<td>'+itm.deathCnt+'</td>' +
-					'<td>'+itm.isolIngCnt+'</td>' +
+					'<td>'+itm.isolatingCnt+'</td>' +
 					'<td>'+itm.isolClearCnt+'</td>' +
 					'</tr>'
 			)
 		});
-		console.log(data)
 	})
 	.fail(function(stat,xhr,err){
 		console.log('fail')
-		console.log(data)
+		console.log(xhr)
 	})
 	.then(function(data,stat,xhr){
-		console.log('then')
+		
 	});
+}
+
+function getFormatDate(date){
 	
-	
-	
-	
-	
-	
-	
-	
-});
+	var year = date.substring(0,4);
+	var month = date.substring(4,6);
+	var day = date.substring(6,8);
+	var hour = date.substring(8,10);
+	return year + '-' + month + '-' + day + '  '+hour+' 시';
+}
 
 </script>
