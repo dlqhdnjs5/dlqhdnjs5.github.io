@@ -31,24 +31,4 @@ public class BootReferencePrj1Application {
 		log.info("Starter application Started!");
 	}
 	
-	
-	/**
-	 * 세션팩토리 설정
-	 * @param dataSource
-	 * @return
-	 * @throws Exception
-	 */
-	@Bean
-	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-		
-		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-		sessionFactory.setDataSource(dataSource);
-		
-		Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:META-INF/mybatis/datasource1/*/*.xml");
-		sessionFactory.setMapperLocations(res);
-		
-		return sessionFactory.getObject();
-		
-	}
-
 }

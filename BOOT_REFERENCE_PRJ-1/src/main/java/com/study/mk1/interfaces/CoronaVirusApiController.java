@@ -139,7 +139,7 @@ public class CoronaVirusApiController {
 		try {
 			
 			Date dDate = new Date();
-			dDate = new Date(dDate.getTime()+(1000*60*60*24*-3));
+			dDate = new Date(dDate.getTime()+(1000*60*60*24*-1));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
 			String yesterday = sdf.format(dDate);
 

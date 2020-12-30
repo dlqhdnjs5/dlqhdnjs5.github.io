@@ -35,7 +35,7 @@ public class Scheduler {
 	/**
 	 * 코로나 관련 정보 인터페이스 호출 스케쥴러
 	 */
-	@Scheduled(cron = "0 8 18 * * ?")
+	@Scheduled(cron = "0 5 22 * * ?")
 	public void selectCoronaInfoScheduler() {
 		
 		try {

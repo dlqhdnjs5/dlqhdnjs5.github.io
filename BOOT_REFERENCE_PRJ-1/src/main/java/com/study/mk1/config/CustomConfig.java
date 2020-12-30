@@ -1,9 +1,14 @@
 package com.study.mk1.config;
 
 import javax.servlet.http.HttpSessionListener;
+import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -49,6 +54,6 @@ public class CustomConfig implements WebMvcConfigurer{
 		threadPoolTaskScheduler.setThreadNamePrefix("schaduler thread pool"); 
 		return threadPoolTaskScheduler; 
 	}
-
+	
 
 }
