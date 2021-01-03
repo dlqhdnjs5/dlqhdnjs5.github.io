@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 import com.study.mk1.interfaces.CoronaVirusApiController;
 
 @Component
-public class MysqlRunner implements ApplicationRunner{
+public class SqlRunner implements ApplicationRunner{
 	
-	private static Logger log = LoggerFactory.getLogger(MysqlRunner.class);
+	private static Logger log = LoggerFactory.getLogger(SqlRunner.class);
 	
 	private DataSource dataSource;
 	
-	public MysqlRunner(DataSource dataSource) {
+	public SqlRunner(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 

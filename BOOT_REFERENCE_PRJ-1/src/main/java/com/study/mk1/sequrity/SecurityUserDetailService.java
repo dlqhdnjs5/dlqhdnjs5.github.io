@@ -28,7 +28,7 @@ import com.study.mk1.jpa.mbr.MbrJpa;
 public class SecurityUserDetailService implements UserDetailsService {
 	
 	private static long ROLE_USER = 1;
-	private static long ROLE_ADMIN = 2;
+	private static long ROLE_ADMIN = 4;
 	
 	private static Logger log = LoggerFactory.getLogger(SecurityUserDetailService.class);
 	
