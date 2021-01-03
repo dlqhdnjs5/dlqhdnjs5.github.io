@@ -23,7 +23,10 @@
 	                                	<input type="text" name="mbrJpa.mbrId" class="form-control form-control-user" placeholder="아이디를 입력해주세요">
 	                                </div>
 	                                <div class="form-group">
-	                                	<input type="text" name="mbrJpa.mbrPw" class="form-control form-control-user" placeholder="비밀번호를 입력해주세요">
+	                                	<input type="password" name="mbrJpa.mbrPw" class="form-control form-control-user" placeholder="비밀번호를 입력해주세요">
+	                                </div>
+	                                <div class="form-group">
+	                                	<input type="password" id="pwConfirm" class="form-control form-control-user" placeholder="비밀번호를  재입력해주세요">
 	                                </div>
 	                                <div class="form-group">
 	                                	<input type="text" name="mbrJpa.mbrNm" class="form-control form-control-user" placeholder="회원명을 입력해주세요">
@@ -81,6 +84,12 @@
 	
 	});
 	
+	$('input[name="mobilNo"]').on("keyup",  function() { 
+		$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+	});
+
+	
+	
 	$('#signUpBtn').on('click',function(){
 		
 		var flag = true;
@@ -101,6 +110,7 @@
 		
 		if(!flag) return;
 		
+		alert('회원가입이 완료되었습니다. 로그인을 진행해 주세요.');
 		signUp();
 		
 	});
@@ -136,11 +146,18 @@
 		var mbrPw = $('input[name="mbrJpa.mbrPw"]').val();
 		mbrPw = mbrPw.trim();
 		
+		var pwConfirm =  $('#pwConfirm').val();
+		pwConfirm = pwConfirm.trim();
+		
 		var mbrNm = $('input[name="mbrJpa.mbrNm"]').val();
 		mbrNm = mbrNm.trim();
 		
 		var mbrEmail = $('input[name="mbrJpa.mbrEmail"]').val();
 		mbrEmail = mbrEmail.trim();
+		
+		var mobileNo = $('input[name="mobilNo"]').val();
+		mobileNo = mobileNo.trim();
+		
 		
 		if(mbrId == ''){
 			alert('아이디를 입력해 주세요.');
@@ -152,6 +169,7 @@
 			return false;
 		}
 		
+		
 		if(mbrNm == ''){
 			alert('이름을 입력해 주세요.');
 			return false;
@@ -159,6 +177,28 @@
 		
 		if(mbrEmail == ''){
 			alert('이메일을 입력해 주세요.');
+			return false;
+		}
+		
+		if(mobileNo == ''){
+			alert('연락처를 입력해 주세요.');
+			return false;
+		}
+		
+		if(pwConfirm != mbrPw){
+			alert('비밀번호와 비밀번호 확인 입력이 다릅니다.');
+			return false;
+		}
+		
+		var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+		if(!reg_email.test(mbrEmail)) {
+			alert('올바른 이메일 형식을 입력해주세요');
+			return false;
+		}
+		
+		if(mobileNo.length < 12){
+			alert('올바른 연락처를 입력해주세요');
 			return false;
 		}
 		

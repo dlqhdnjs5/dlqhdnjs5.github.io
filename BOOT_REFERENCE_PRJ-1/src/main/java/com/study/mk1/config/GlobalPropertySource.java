@@ -26,7 +26,10 @@ public class GlobalPropertySource {
     
     @Value("${spring.datasource.password}")
     private String password;
- 
+    
+    @Value("${base.ip}")
+    private String baseIp;
+    
     public String getDriverClassName() {
         return driverClassName;
     }
@@ -43,4 +46,11 @@ public class GlobalPropertySource {
         return password;
     }
 
+    public String getBaseIp() {
+    	return baseIp;
+    }
+    
+    public String getBaseUri() {
+    	return "http://"+baseIp;
+    }
 }

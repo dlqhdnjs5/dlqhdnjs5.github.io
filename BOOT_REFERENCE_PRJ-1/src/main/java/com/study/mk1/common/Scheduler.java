@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +25,9 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.study.mk1.cmp.components.CoronaCommonComponent;
+import com.study.mk1.config.GlobalPropertySource;
 import com.study.mk1.entity.CoronaInfo;
+import com.study.mk1.interfaces.CoronaVirusApiController;
 import com.study.mk1.jpa.coronaInfo.CoronaInfoJpa;
 
 @Component
@@ -32,11 +36,18 @@ public class Scheduler {
 	@Autowired
 	CoronaCommonComponent coronaCommonComponent;
 	
+	@Autowired
+	GlobalPropertySource globalPropertySource;
+	
+	private static Logger log = LoggerFactory.getLogger(Scheduler.class);
+	
 	/**
 	 * 코로나 관련 정보 인터페이스 호출 스케쥴러
 	 */
-	@Scheduled(cron = "0 5 22 * * ?")
+	@Scheduled(cron = "59 59 23 * * ?")
 	public void selectCoronaInfoScheduler() {
+		
+		log.info(this.getClass()+".selectCoronaInfoScheduler() [START]");
 		
 		try {
 			
@@ -48,7 +59,7 @@ public class Scheduler {
 			HttpEntity<?> entity = new HttpEntity<>(header);
 			header.setContentType(MediaType.APPLICATION_JSON);
 			
-			UriComponents uriComponents = UriComponentsBuilder.fromUriString("http://localhost:7004")
+			UriComponents uriComponents = UriComponentsBuilder.fromUriString(globalPropertySource.getBaseUri())
 			.path("/inf/api/getCoronaConfirmedInfoXmlParse")
 			.build();
 	
