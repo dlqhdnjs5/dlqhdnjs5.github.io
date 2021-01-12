@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/defaultLayout">
+<th:block layout:fragment="content">
+		<div class="container-center">
+		<div class="p-5 ">
+		<div class="text-center">
+                <h1 class="h6 text-gray-900 mb-4">가족을 등록해주세요!</h1>
+                  </div>
+                  <form id="signUpForm" name="signUpForm" action="/join">
+                      <div class="form-group">
+                      	<input type="text" name="mbrJpa.mbrId" class="form-control" placeholder="이름  (20자 이내)">
+                      </div>
+                      <div class="form-group">
+                      	<input type="password" name="mbrJpa.mbrPw" class="form-control " placeholder="비밀번호를 입력해주세요">
+                      </div>
+                      <div class="form-group">
+                      	<input type="password" id="pwConfirm" class="form-control " placeholder="비밀번호를  재입력해주세요">
+                      </div>
+                      <div class="form-group">
+                      	<input type="text" name="mbrJpa.mbrNm" class="form-control " placeholder="회원명을 입력해주세요">
+                      </div>
+                      <div class="form-group">
+                      	<input type="text" name="mbrJpa.mbrEmail" class="form-control " placeholder="이메일을 입력해주세요">
+                      </div>
+                      <div class="form-group">
+                      	<input type="text" maxLength="13" name="mobilNo" class="form-control " placeholder="010-1234-5678">
+                      </div>
+                      <br><br><br><br>
+                      <button id="signUpBtn" class="btn btn-primary  btn-block">Sign up</button>
+                      <br><br><br><br><br><br><br>
+                  </form>
+                  <hr>
+           </div>
+		</div>
+</th:block>
+</html>
+<script>
+
+	
+
+	
+</script>
+

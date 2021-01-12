@@ -44,10 +44,10 @@ public class Scheduler {
 	/**
 	 * 코로나 관련 정보 인터페이스 호출 스케쥴러
 	 */
-	@Scheduled(cron = "59 59 23 * * ?")
+	@Scheduled(cron = "0 39 20 * * ?")
 	public void selectCoronaInfoScheduler() {
 		
-		log.info(this.getClass()+".selectCoronaInfoScheduler() [START]");
+		log.info(this.getClass()+".selectCoronaInfoScheduler() [START] {}",globalPropertySource.getBaseUri().toString());
 		
 		try {
 			
@@ -59,7 +59,7 @@ public class Scheduler {
 			HttpEntity<?> entity = new HttpEntity<>(header);
 			header.setContentType(MediaType.APPLICATION_JSON);
 			
-			UriComponents uriComponents = UriComponentsBuilder.fromUriString(globalPropertySource.getBaseUri())
+			UriComponents uriComponents = UriComponentsBuilder.fromUriString(globalPropertySource.getBaseUri().toString())
 			.path("/inf/api/getCoronaConfirmedInfoXmlParse")
 			.build();
 	
@@ -90,6 +90,8 @@ public class Scheduler {
 	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			log.info(this.getClass()+".selectCoronaInfoScheduler() [ERROR] {}",e.toString());
+			log.error(this.getClass()+".selectCoronaInfoScheduler() [ERROR] {}",e.toString());
 			e.printStackTrace();
 		}
 

@@ -1,6 +1,9 @@
 package com.study.mk1.jpa.mbr;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,11 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.study.mk1.abstracts.AbstractEntity;
 import com.study.mk1.jpa.mbrAuthMapping.MbrAuthMappingJpa;
+import com.study.mk1.jpa.mbrPetMapping.MbrPetMappingJpa;
+import com.study.mk1.jpa.mbrPrjMapping.MbrPrjMappingJpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -68,6 +74,13 @@ public class  MbrJpa extends AbstractEntity{
 	
 	
 	@OneToOne(fetch = FetchType.LAZY,mappedBy = "mbrJpa")
-	MbrAuthMappingJpa mam;
+	MbrAuthMappingJpa mbrAuthMappingJpa;
+	
+	/* 프로젝트 모집 서비스용 (사용안함)
+	 * @OneToMany(fetch = FetchType.LAZY,mappedBy = "mbrJpa")
+	List<MbrPrjMappingJpa> mpm = new ArrayList<MbrPrjMappingJpa>();*/
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "mbrJpa")
+	List<MbrPetMappingJpa> mbrPetMappingJpa = new ArrayList<MbrPetMappingJpa>();
 	
 }

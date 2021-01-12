@@ -8,12 +8,12 @@ public enum MbrAuthEnum {
 	public enum mbrGrdCd {
 		
 		GNRL, //일반
-		BMF; //최고
+		CHAMP; //최고
 	}
 	
 	public enum mbrStatCd {
 		
-		AVAIL, //사용중
+		ACT, //사용중
 		SCSI; //탈퇴
 	}
 	

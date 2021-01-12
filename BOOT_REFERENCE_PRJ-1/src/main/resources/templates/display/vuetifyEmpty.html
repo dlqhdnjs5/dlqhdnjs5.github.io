@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/vuetifyLayout">
+<th:block layout:fragment="content">
+	<template>
+	<div class="col-lg-6 mb-4">
+           <div class="card shadow mb-4" v-for="i in indx">
+               <div class="card-header py-3">
+                   <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+               </div>
+               <div class="card-body">
+                   <div class="text-center">
+                       <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                           src="img/undraw_posting_photo.svg" alt="">
+                   </div>
+                   <p>니기미 시발거 뭘로 하라는거야 도대체가 이 개새끼들같은것들진짜 시발것<a
+                           target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
+                       constantly updated collection of beautiful svg images that you can use
+                       completely free and without attribution!</p>
+                   <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
+                       unDraw &rarr;</a>
+               </div>
+           </div>
+	</div>
+		 <v-card
+		    class="mx-auto"
+		    max-width="344"
+		    outlined
+		  >
+		    <v-list-item three-line>
+		      <v-list-item-content>
+		        <div class="overline mb-4">OVERLINE</div>
+		        <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
+		        <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+		      </v-list-item-content>
+		
+		      <v-list-item-avatar
+		        tile
+		        size="80"
+		        color="grey"
+		      ></v-list-item-avatar>
+		    </v-list-item>
+		
+		    <v-card-actions>
+		      <v-btn text>Button</v-btn>
+		      <v-btn text>Button</v-btn>
+		    </v-card-actions>
+		  </v-card>
+	</template>
+
+</th:block >
+</html>
+<th:block layout:fragment="body-script">
+	<script>
+	_mixins.push({
+		created: function(){
+		},
+		data : function(){
+			return {
+				indx : 4,
+			}
+		}
+	});
+	</script>
+</th:block>
+

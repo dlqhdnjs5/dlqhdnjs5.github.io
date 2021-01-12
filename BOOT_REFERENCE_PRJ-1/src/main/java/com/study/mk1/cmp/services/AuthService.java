@@ -33,7 +33,7 @@ public class AuthService {
 		 */
 		
 		MbrJpa mbrJpa  = mbrJpaRepository.findByMbrId(userId);
-		SecurityUserDetails userDetail = new SecurityUserDetails(mbrJpa,mbrJpa.getMam().getAuthJpa());
+		SecurityUserDetails userDetail = new SecurityUserDetails(mbrJpa,mbrJpa.getMbrAuthMappingJpa().getAuthJpa());
 		
 		return userDetail;
 	}

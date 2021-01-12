@@ -3,6 +3,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/defaultLayout">
 <th:block layout:fragment="content">
+ <div class="jumbotron">
+  <h1 class="display-3">toothpa</h1>
+  <p class="lead">develop record</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  </p>
+</div>	
 	<div class="text-center">
 		<div class="error mx-auto" data-text="MAIN">MAIN</div>
 		준비중
@@ -15,7 +24,6 @@
 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 		</form>
 	</div>
-	
 </th:block>
 </html>
 

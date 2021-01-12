@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @Slf4j
-@Configuration
 @EnableScheduling
 @ComponentScan(basePackages = "com.study")
 public class BootReferencePrj1Application  extends SpringBootServletInitializer {

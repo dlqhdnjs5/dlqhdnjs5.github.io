@@ -59,7 +59,7 @@ public class SecurityUserDetailService implements UserDetailsService {
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		mbr.setMbrPw(passwordEncoder.encode(mbr.getMbrPw()));
 		mbr.setMbrGrdCd(MbrAuthEnum.mbrGrdCd.GNRL.toString());
-		mbr.setMbrStatCd(MbrAuthEnum.mbrStatCd.AVAIL.toString());
+		mbr.setMbrStatCd(MbrAuthEnum.mbrStatCd.ACT.toString());
 		mbr.setMbrTpCd(MbrAuthEnum.mbrTpCd.GNRL.toString());
 		
 		MbrInfoDTO mbrInfoDTO = new MbrInfoDTO();
@@ -76,7 +76,7 @@ public class SecurityUserDetailService implements UserDetailsService {
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		mbrInfoDto.getMbrJpa().setMbrPw(passwordEncoder.encode(mbrInfoDto.getMbrJpa().getMbrPw()));
 		mbrInfoDto.getMbrJpa().setMbrGrdCd(MbrAuthEnum.mbrGrdCd.GNRL.toString());
-		mbrInfoDto.getMbrJpa().setMbrStatCd(MbrAuthEnum.mbrStatCd.AVAIL.toString());
+		mbrInfoDto.getMbrJpa().setMbrStatCd(MbrAuthEnum.mbrStatCd.ACT.toString());
 		mbrInfoDto.getMbrJpa().setMbrTpCd(MbrAuthEnum.mbrTpCd.GNRL.toString());
 		mbrInfoDto.setMbrAuthMappingSeq(ROLE_USER);
 		
