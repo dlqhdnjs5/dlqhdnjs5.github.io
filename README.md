@@ -10,16 +10,16 @@ Static portfolio site for GitHub Pages.
 - `assets/docs/lee-bowon-resume.pdf`: Resume PDF
 - `assets/docs/lee-bowon-portfolio.pdf`: Portfolio PDF
 - `.nojekyll`: Prevents GitHub Pages from running Jekyll processing
-- `.github/workflows/pages.yml`: GitHub Pages deployment workflow
+- `scripts/deploy-github-pages.ps1`: Optional push helper for the `master` branch
 
-## Deploy With GitHub Pages Actions
+## Deploy With GitHub Pages
 
 1. Create or connect a GitHub repository.
 2. Push this project to the `master` branch.
 3. Open the repository on GitHub.
 4. Go to `Settings > Pages`.
-5. Set `Build and deployment > Source` to `GitHub Actions`.
-6. The workflow named `Deploy portfolio to GitHub Pages` will publish the site.
+5. Set `Build and deployment > Source` to `Deploy from a branch`.
+6. Select `master` and `/ (root)`, then save.
 
 For a user site URL such as `https://dlqhdnjs5.github.io/`, create the repository as `dlqhdnjs5.github.io`.
 
