@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="이보원 백엔드 개발자 포트폴리오 - Spring Boot, Kafka, Redis, MySQL, AI Application, 운영 안정성 중심의 백엔드 시스템 개발 경험"
+    />
+    <meta property="og:title" content="LEE BOWON | Backend Developer" />
+    <meta
+      property="og:description"
+      content="운영 안정성과 자동화를 설계하는 9년차 백엔드 개발자 이보원의 포트폴리오"
+    />
+    <meta property="og:type" content="website" />
+    <title>LEE BOWON | Backend Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="cursor-glow" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="맨 위로 이동">
+        <span class="brand-mark">LB</span>
+        <span>LEE BOWON</span>
+      </a>
+      <nav class="top-nav" aria-label="주요 메뉴">
+        <a href="#story">Story</a>
+        <a href="#projects">Projects</a>
+        <a href="#career">Career</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-panel" aria-labelledby="hero-title">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Backend Developer / AI Application Builder</p>
+          <h1 id="hero-title">
+            운영 안정성과 자동화를 설계하는 백엔드 개발자
+            <span>이보원입니다.</span>
+          </h1>
+          <p class="hero-lede">
+            Java/Kotlin, Spring Boot, Kafka, MySQL, Redis 기반의 시스템을 개발하고
+            운영해왔습니다. 대용량 Metric 처리, IDC 이중화, Rule 기반 탐지 알림,
+            Spring Batch 성능 개선, LLM/RAG 기반 업무 자동화에 집중합니다.
+          </p>
+          <div class="hero-actions" aria-label="주요 링크">
+            <a class="button primary" href="#projects">프로젝트 보기</a>
+            <a class="button ghost" href="https://github.com/dlqhdnjs5" target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+            <a class="button ghost" href="mailto:dlqhdnjs5@naver.com">Email</a>
+            <a class="button ghost" href="assets/docs/lee-bowon-resume.pdf" target="_blank" rel="noreferrer">
+              Resume PDF
+            </a>
+            <a class="button ghost" href="assets/docs/lee-bowon-portfolio.pdf" target="_blank" rel="noreferrer">
+              Portfolio PDF
+            </a>
+          </div>
+        </div>
+        <div class="hero-stage reveal" aria-label="핵심 역량 요약">
+          <div class="orbit-card main">
+            <span class="metric">9년차</span>
+            <strong>Backend Engineer</strong>
+            <p>운영 환경에서 오래 버티는 구조를 설계합니다.</p>
+          </div>
+          <div class="orbit-node node-a">Kafka</div>
+          <div class="orbit-node node-b">Redis</div>
+          <div class="orbit-node node-c">Batch</div>
+          <div class="orbit-node node-d">AI Agent</div>
+          <div class="orbit-ring ring-one"></div>
+          <div class="orbit-ring ring-two"></div>
+        </div>
+      </section>
+
+      <section id="story" class="scroll-story" aria-labelledby="story-title">
+        <div class="story-copy">
+          <p class="eyebrow">Scroll Story</p>
+          <h2 id="story-title">스크롤하면 시스템이 움직입니다.</h2>
+          <p>
+            단순 기능 구현보다 장애, 재처리, 중복 방지, 데이터 정합성까지 함께 보는
+            개발자라는 점을 화면 흐름으로 보여줍니다.
+          </p>
+        </div>
+        <div class="story-stage">
+          <div class="system-map" aria-hidden="true">
+            <div class="map-layer layer-back">
+              <span>Client</span>
+              <span>Nginx</span>
+              <span>Spring Boot</span>
+              <span>MySQL</span>
+            </div>
+            <div class="map-core">
+              <span class="pulse"></span>
+              <strong>Event Flow</strong>
+              <small>Rule Detection -> Kafka -> Retry -> Notification</small>
+            </div>
+            <div class="stream stream-one"></div>
+            <div class="stream stream-two"></div>
+            <div class="stream stream-three"></div>
+            <div class="map-layer layer-front">
+              <span>Failover</span>
+              <span>DR</span>
+              <span>Dedup</span>
+              <span>Monitoring</span>
+            </div>
+          </div>
+        </div>
+        <div class="story-metrics">
+          <article class="metric-card reveal">
+            <span>01</span>
+            <strong>약 1억 건 Metric 처리</strong>
+            <p>불필요 Metric 약 9천만 건 필터링, 유효 Metric 약 1천만 건 저장.</p>
+          </article>
+          <article class="metric-card reveal">
+            <span>02</span>
+            <strong>쿼리 10초대 -> 0~1초대</strong>
+            <p>실행 계획과 조인 구조를 재검토해 운영 화면 응답성을 개선.</p>
+          </article>
+          <article class="metric-card reveal">
+            <span>03</span>
+            <strong>배치 20분 이상 -> 5분 미만</strong>
+            <p>Spring Batch 처리 구조 변경, 멀티 스레드 적용, 집계 병목 완화.</p>
+          </article>
+          <article class="metric-card reveal">
+            <span>04</span>
+            <strong>Kafka IDC HA</strong>
+            <p>Active-Active, Health Check, Failover, DR 구조 설계와 구현.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="skills section-panel" aria-labelledby="skills-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Core Stack</p>
+          <h2 id="skills-title">운영에서 검증한 기술 스택</h2>
+        </div>
+        <div class="skill-grid">
+          <article class="skill-column reveal">
+            <h3>Backend</h3>
+            <p>Java, Kotlin, Spring Boot, Spring Batch, WebFlux, MyBatis, JPA</p>
+          </article>
+          <article class="skill-column reveal">
+            <h3>Data & Messaging</h3>
+            <p>MySQL, Redis, Redis Sentinel, Kafka, Kafka AdminClient, ReactiveKafka</p>
+          </article>
+          <article class="skill-column reveal">
+            <h3>Infra & Tools</h3>
+            <p>AWS, Naver Cloud, Nginx, Docker, Gradle, GitHub Actions, Shell Script</p>
+          </article>
+          <article class="skill-column reveal">
+            <h3>AI Application</h3>
+            <p>LLM, RAG, Tool Calling, AI Code Review, 사내 가이드 챗봇, Agent Prototype</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="projects" class="projects section-panel" aria-labelledby="projects-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Featured Projects</p>
+          <h2 id="projects-title">실제로 만들고 운영까지 고민한 프로젝트</h2>
+          <p>
+            카드 클릭 시 상세 내용을 볼 수 있고, 서비스와 GitHub 링크로 바로 이동할 수 있습니다.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card reveal" data-project="mukchoice" tabindex="0">
+            <div class="project-visual">
+              <img
+                src="https://github.com/user-attachments/assets/098dd4fb-74d5-4e9a-9fca-289b6c3671ad"
+                alt="MukChoice 서비스 화면"
+                loading="lazy"
+              />
+            </div>
+            <div class="project-body">
+              <p class="project-kind">Location / Food / Random Choice</p>
+              <h3>먹초이스 MukChoice</h3>
+              <p>
+                위치 기반 맛집 추천과 그룹 위시리스트, 랜덤 추천을 결합한 의사결정 지원 서비스.
+              </p>
+              <div class="tag-row">
+                <span>Kotlin</span>
+                <span>Spring Boot</span>
+                <span>React</span>
+                <span>Docker</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal" data-project="nawago" tabindex="0">
+            <div class="project-visual">
+              <img
+                src="https://user-images.githubusercontent.com/73633754/223451419-6f344c38-21ea-4b55-8dc9-f32d2a134675.png"
+                alt="Nawago 서비스 대표 이미지"
+                loading="lazy"
+              />
+            </div>
+            <div class="project-body">
+              <p class="project-kind">Open API / Community / Animal Care</p>
+              <h3>나에게 와줘서 고마워 Nawago</h3>
+              <p>
+                공공 Open API 기반 유기동물 정보 조회와 커뮤니티 기능을 통합한 웹 서비스.
+              </p>
+              <div class="tag-row">
+                <span>Java</span>
+                <span>Spring Boot</span>
+                <span>Vue.js</span>
+                <span>AWS S3</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="career" class="career section-panel" aria-labelledby="career-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Career Timeline</p>
+          <h2 id="career-title">문제 해결 중심의 커리어</h2>
+        </div>
+        <div class="timeline">
+          <article class="timeline-item reveal">
+            <time>2021.04 - 재직중</time>
+            <div>
+              <h3>엔테크서비스 / 백엔드 개발자</h3>
+              <p>
+                사내 서비스 인프라 이벤트 탐지 알림, 네이버 서버 관제 시스템 고도화,
+                Kafka IDC 이중화, Redis Sentinel 운영 안정화, AI 업무 자동화 기능을 담당했습니다.
+              </p>
+            </div>
+          </article>
+          <article class="timeline-item reveal">
+            <time>2018.02 - 2021.04</time>
+            <div>
+              <h3>플그림 / 백엔드 개발자</h3>
+              <p>
+                네이버 Glyde, 삼성물산 SSF SHOP, Discovery Expedition 이커머스 구축과 고도화에서
+                전시, 상품, 정산 배치, 백오피스 개발을 맡았습니다.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="contact section-panel" aria-labelledby="contact-title">
+        <div class="contact-panel reveal">
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">운영 가능한 시스템을 함께 만들 준비가 되어 있습니다.</h2>
+          <p>
+            백엔드 시스템 설계, 대용량 처리, 장애 대응, AI 기반 업무 자동화에 관심이 많습니다.
+          </p>
+          <div class="contact-links">
+            <a class="button primary" href="mailto:dlqhdnjs5@naver.com">dlqhdnjs5@naver.com</a>
+            <a class="button ghost" href="https://github.com/dlqhdnjs5" target="_blank" rel="noreferrer">
+              GitHub Profile
+            </a>
+            <a class="button ghost" href="assets/docs/lee-bowon-resume.pdf" target="_blank" rel="noreferrer">
+              Resume
+            </a>
+            <a class="button ghost" href="assets/docs/lee-bowon-portfolio.pdf" target="_blank" rel="noreferrer">
+              Portfolio
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal" id="project-modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="modal-backdrop" data-close-modal></div>
+      <article class="modal-card" role="document">
+        <button class="modal-close" type="button" data-close-modal aria-label="닫기">x</button>
+        <div class="modal-content" id="modal-content"></div>
+      </article>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
