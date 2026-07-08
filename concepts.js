@@ -47,70 +47,49 @@ let scrollProgress = 0;
 let targetProgress = 0;
 let currentTravelY = 9.5;
 
-const ORBIT_STOP = 0.5;
-const SKILL_FADE_START = 0.44;
-const SKILL_FADE_END = 0.55;
-const STREAM_SPREAD_START = 0.46;
-const STREAM_SPREAD_END = 0.62;
+const ORBIT_STOP = 0.42;
+const SKILL_FADE_START = 0.36;
+const SKILL_FADE_END = 0.44;
+const STREAM_SPREAD_START = 0.39;
+const STREAM_SPREAD_END = 0.55;
 const DEEP_FADE_START = 0.86;
 const DEEP_FADE_END = 0.98;
 
 const skills = [
   {
-    kicker: "CORE STACK",
-    title: "Java / Kotlin",
-    body: "운영 서비스의 안정성을 우선으로 보는 백엔드 구현 경험",
-    meta: "9y backend",
+    kicker: "PROFILE",
+    title: "9년차 백엔드 개발자",
+    body: "Java/Kotlin, Spring Boot, Kafka, MySQL, Redis 기반 운영 시스템 개발",
+    meta: "LEE BOWON",
     color: "#44efff",
   },
   {
-    kicker: "APPLICATION",
-    title: "Spring Boot",
-    body: "API, Batch, 인증, 운영 화면을 연결하는 서비스 구조 설계",
-    meta: "API platform",
+    kicker: "SCALE",
+    title: "약 1억 건 Metric 처리",
+    body: "불필요 Metric 약 9천만 건 필터링, 유효 Metric 약 1천만 건 저장",
+    meta: "Metric Stream",
     color: "#67ffbf",
   },
   {
-    kicker: "EVENT STREAM",
-    title: "Kafka",
-    body: "Lag, retry, dedup, replay를 고려한 이벤트 처리 흐름",
-    meta: "high volume",
+    kicker: "PERFORMANCE",
+    title: "10초대 -> 0~1초대",
+    body: "실행 계획과 조인 구조를 재설계해 운영 화면 응답성 개선",
+    meta: "Query Tuning",
     color: "#4e8cff",
   },
   {
     kicker: "RELIABILITY",
-    title: "Redis Sentinel",
-    body: "Failover와 Health Check를 포함한 운영 안정성 확보",
+    title: "IDC 이중화와 Failover",
+    body: "Active-Active, Health Check, DR, Retry, 중복 방지 흐름 설계",
     meta: "HA / DR",
     color: "#ffe28a",
   },
   {
-    kicker: "DATA LAYER",
-    title: "MySQL / Query",
-    body: "실행 계획과 인덱스를 읽고 운영 화면 응답성을 개선",
-    meta: "0-1s query",
-    color: "#44efff",
-  },
-  {
-    kicker: "JOB PIPELINE",
-    title: "Spring Batch",
-    body: "처리 단위, 병렬성, 재처리를 재설계해 배치 병목 완화",
-    meta: "20m -> 5m",
-    color: "#ff3fd4",
-  },
-  {
-    kicker: "OPERATIONS",
-    title: "IDC Failover",
-    body: "이중화, 장애 탐지, 복구 루트를 시스템 설계에 포함",
-    meta: "active-active",
-    color: "#b34cff",
-  },
-  {
     kicker: "AI AUTOMATION",
-    title: "LLM / RAG",
-    body: "운영 지식 탐색과 반복 업무를 Agent 흐름으로 자동화",
-    meta: "tool calling",
-    color: "#67ffbf",
+    title: "RAG와 Tool Calling",
+    body: "사내 가이드 챗봇, 코드리뷰 자동화, API 호출 에이전트 프로토타입",
+    meta: "LLM App",
+    color: "#ff3fd4",
   },
 ];
 
@@ -254,7 +233,7 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 3) {
 }
 
 function createCardTexture(card, wide = false) {
-  const width = wide ? 1120 : 900;
+  const width = wide ? 1120 : 1160;
   const height = wide ? 520 : 560;
   const textureCanvas = document.createElement("canvas");
   textureCanvas.width = width;
@@ -281,12 +260,12 @@ function createCardTexture(card, wide = false) {
   ctx.fillText(card.kicker, 70, 94);
 
   ctx.fillStyle = "#f8fbff";
-  ctx.font = wide ? "900 72px Inter, sans-serif" : "900 74px Inter, sans-serif";
-  wrapText(ctx, card.title, 70, wide ? 190 : 210, width - 140, wide ? 78 : 76, 2);
+  ctx.font = wide ? "900 72px Inter, sans-serif" : "900 70px Inter, sans-serif";
+  wrapText(ctx, card.title, 70, wide ? 190 : 206, width - 140, wide ? 78 : 74, 2);
 
   ctx.fillStyle = "rgba(235,244,255,0.76)";
-  ctx.font = wide ? "600 34px Inter, sans-serif" : "600 32px Inter, sans-serif";
-  wrapText(ctx, card.body, 70, wide ? 318 : 376, width - 140, wide ? 44 : 42, 2);
+  ctx.font = wide ? "600 34px Inter, sans-serif" : "600 31px Inter, sans-serif";
+  wrapText(ctx, card.body, 70, wide ? 318 : 372, width - 140, wide ? 44 : 42, 3);
 
   ctx.fillStyle = "rgba(255,255,255,0.08)";
   roundRect(ctx, 70, height - 104, wide ? 310 : 260, 54, 27);
@@ -302,7 +281,7 @@ function createCardTexture(card, wide = false) {
 }
 
 function createCardBackTexture(card, wide = false) {
-  const width = wide ? 1120 : 900;
+  const width = wide ? 1120 : 1160;
   const height = wide ? 520 : 560;
   const textureCanvas = document.createElement("canvas");
   textureCanvas.width = width;
@@ -353,8 +332,8 @@ function createCardBackTexture(card, wide = false) {
 function makeCardMesh(card, wide = false) {
   const frontTexture = createCardTexture(card, wide);
   const backTexture = createCardBackTexture(card, wide);
-  const width = wide ? 5.05 : 4.45;
-  const height = wide ? 2.34 : 2.58;
+  const width = wide ? 5.05 : 5.55;
+  const height = wide ? 2.34 : 2.68;
   const depth = wide ? 0.16 : 0.18;
   const geometry = new THREE.BoxGeometry(width, height, depth, 1, 1, 1);
   const sideMaterial = new THREE.MeshBasicMaterial({
@@ -406,7 +385,7 @@ function makeCardMesh(card, wide = false) {
 }
 
 function makeSkillCards() {
-  const thetaStep = Math.PI * 0.54;
+  const thetaStep = Math.PI * 0.7;
   const midTheta = ((skills.length - 1) * thetaStep) / 2;
   skills.forEach((card, index) => {
     const mesh = makeCardMesh(card);
@@ -414,9 +393,9 @@ function makeSkillCards() {
     mesh.userData.theta = theta;
     mesh.userData.thetaStep = thetaStep;
     mesh.userData.midTheta = midTheta;
-    mesh.userData.radius = index % 2 === 0 ? 5.85 : 5.35;
-    mesh.userData.pitch = 0.86;
-    mesh.userData.baseScale = 0.95 + (index % 3) * 0.04;
+    mesh.userData.radius = index % 2 === 0 ? 6.15 : 5.65;
+    mesh.userData.pitch = 0.92;
+    mesh.userData.baseScale = 0.98 + (index % 2) * 0.04;
     mesh.userData.roll = index % 2 === 0 ? -0.035 : 0.035;
     cardMeshes.push(mesh);
     cardGroup.add(mesh);
