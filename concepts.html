@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="수직 데이터 스트림을 중심으로 펼쳐지는 이보원 백엔드 개발자 3D 포트폴리오 컨셉"
+    />
+    <title>LEE BOWON | Vertical Data Stream Portfolio</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="concepts.css" />
+  </head>
+  <body>
+    <div class="webgl-stage" aria-hidden="true">
+      <canvas id="data-stream-canvas"></canvas>
+    </div>
+
+    <header class="site-orbit">
+      <a class="brand" href="index.html" aria-label="기존 포트폴리오로 이동">
+        <span>LB</span>
+        <strong>LEE BOWON</strong>
+      </a>
+      <nav aria-label="빠른 이동">
+        <a href="#skills">Skills</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#scraps">Evidence</a>
+      </nav>
+    </header>
+
+    <aside class="scroll-hud" aria-label="스크롤 진행 상태">
+      <span class="hud-label">SCROLL DRIVE</span>
+      <span class="hud-line"><i id="progress-line"></i></span>
+      <strong id="progress-value">00</strong>
+    </aside>
+
+    <main class="experience-shell">
+      <section class="hero-panel chapter orbit-chapter" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Scroll Driven Helix</p>
+          <h1 id="hero-title">스크롤로 회전하는 데이터 스트림 포트폴리오</h1>
+          <p>
+            나선형 카드와 중앙 스트림을 첫 화면의 주인공으로 배치했습니다.
+            자동 회전 없이, 화면을 내리고 올릴 때만 카드가 축을 따라 움직입니다.
+          </p>
+          <div class="hero-meta" aria-label="핵심 키워드">
+            <span>Spring Boot</span>
+            <span>Kafka</span>
+            <span>Redis HA</span>
+            <span>AI Automation</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter narrative-panel left orbit-chapter" id="skills">
+        <div class="floating-copy">
+          <p class="eyebrow">Phase 01 / Skill Orbit</p>
+          <h2>스킬 카드는 스트림을 감싸며 전면에서 회전합니다.</h2>
+          <p>
+            Java/Kotlin, Spring Boot, Kafka, MySQL, Redis, Batch, LLM/RAG 경험이
+            한 축을 중심으로 움직이며 등장합니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="chapter narrative-panel right orbit-chapter">
+        <div class="floating-copy">
+          <p class="eyebrow">Phase 02 / Scroll Control</p>
+          <h2>회전은 시간 애니메이션이 아니라 스크롤 위치에 묶입니다.</h2>
+          <p>
+            멈추면 카드도 멈추고, 되감으면 카드도 되돌아갑니다. 보는 사람이 직접
+            흐름을 조작하는 구조입니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="chapter narrative-panel center spread-gate">
+        <div class="floating-copy">
+          <p class="eyebrow">Phase 03 / Stream Expansion</p>
+          <h2>스트림이 펼쳐지는 순간, 나선형 카드는 멈추고 사라집니다.</h2>
+          <p>
+            이 지점부터는 회전하는 스킬 카드가 아니라 실제 프로젝트 카드만 전면에
+            남아 읽히도록 전환했습니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="portfolio-reveal" id="portfolio" aria-labelledby="portfolio-title">
+        <div class="portfolio-heading">
+          <p class="eyebrow">Portfolio Surface</p>
+          <h2 id="portfolio-title">
+            <span>스트림이 펼쳐진 자리에서</span>
+            <span>프로젝트가 나타납니다.</span>
+          </h2>
+          <p>
+            3D 스트림은 뒤에서 분기만 만들고, 프로젝트는 전면 카드로 분리했습니다.
+            첨부 이미지처럼 제목과 핵심 문장을 강하게 읽히는 구조입니다.
+          </p>
+        </div>
+
+        <div class="portfolio-grid">
+          <article class="project-panel">
+            <span class="project-index">01</span>
+            <p class="project-kind">Metric Pipeline</p>
+            <h3>
+              <span>대용량 Metric 필터링</span>
+              <span>및 저장 최적화</span>
+            </h3>
+            <p>
+              불필요한 Metric 약 9천만 건을 필터링하고 유효 Metric 약 1천만 건을
+              안정적으로 저장하는 운영 흐름을 설계했습니다.
+            </p>
+            <div class="tag-list">
+              <span>Kafka</span>
+              <span>MySQL</span>
+              <span>Rule Engine</span>
+            </div>
+          </article>
+
+          <article class="project-panel featured">
+            <span class="project-index">02</span>
+            <p class="project-kind">Incident Response</p>
+            <h3>
+              <span>IDC 이중화와 장애</span>
+              <span>대응 자동화</span>
+            </h3>
+            <p>
+              Active-Active 구조, Health Check, Failover, DR 전략을 통해 운영
+              장애를 빠르게 감지하고 복구하는 시스템을 구성했습니다.
+            </p>
+            <div class="tag-list">
+              <span>Redis Sentinel</span>
+              <span>HA</span>
+              <span>Monitoring</span>
+            </div>
+          </article>
+
+          <article class="project-panel">
+            <span class="project-index">03</span>
+            <p class="project-kind">AI Automation</p>
+            <h3>
+              <span>LLM/RAG 기반 업무</span>
+              <span>자동화</span>
+            </h3>
+            <p>
+              반복 문의, 장애 문서 탐색, 운영 가이드 검색을 Agent와 RAG 흐름으로
+              연결해 개발자의 반복 작업을 줄이는 방향을 실험했습니다.
+            </p>
+            <div class="tag-list">
+              <span>LLM</span>
+              <span>RAG</span>
+              <span>Tool Calling</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="scrap-board" id="scraps" aria-labelledby="scrap-title">
+        <div class="scrap-heading">
+          <p class="eyebrow">Evidence Scrap Cards</p>
+          <h2 id="scrap-title">
+            <span>프로젝트 아래에는</span>
+            <span>스크랩한 근거 카드가 쌓입니다.</span>
+          </h2>
+          <p>
+            프로젝트를 읽은 뒤 더 내려오면, 문제-설계-결과를 빠르게 확인하는
+            스크랩형 카드와 표가 이어집니다.
+          </p>
+        </div>
+
+        <div class="scrap-grid" aria-label="운영 경험 스크랩 카드">
+          <article class="scrap-card">
+            <span class="scrap-number">A</span>
+            <p class="scrap-label">Problem</p>
+            <h3>대량 Metric 유입으로 저장 비용과 조회 부담 증가</h3>
+            <p>중복/불필요 데이터를 분리하고, 유효 데이터만 안정적으로 남기는 기준이 필요했습니다.</p>
+          </article>
+
+          <article class="scrap-card">
+            <span class="scrap-number">B</span>
+            <p class="scrap-label">Design</p>
+            <h3>Rule Engine과 Kafka 흐름으로 필터링 책임 분리</h3>
+            <p>수집, 판정, 저장 단계를 나누어 장애 범위를 좁히고 재처리 가능한 구조로 정리했습니다.</p>
+          </article>
+
+          <article class="scrap-card">
+            <span class="scrap-number">C</span>
+            <p class="scrap-label">Result</p>
+            <h3>운영자가 읽는 지표와 시스템이 저장하는 지표를 분리</h3>
+            <p>저장량과 화면 응답성을 함께 개선하고, 장애 대응 때 확인해야 할 신호를 선명하게 만들었습니다.</p>
+          </article>
+        </div>
+
+        <div class="scrap-table" aria-label="프로젝트 요약 표">
+          <div class="table-row table-head">
+            <span>영역</span>
+            <span>핵심 설계</span>
+            <span>증명 포인트</span>
+          </div>
+          <div class="table-row">
+            <span>Metric</span>
+            <span>필터링 / 저장 최적화</span>
+            <span>9천만 건 제거, 1천만 건 안정 저장</span>
+          </div>
+          <div class="table-row">
+            <span>Incident</span>
+            <span>Active-Active / Failover</span>
+            <span>장애 감지와 복구 루트 단축</span>
+          </div>
+          <div class="table-row">
+            <span>AI</span>
+            <span>RAG / Tool Calling</span>
+            <span>반복 문의와 운영 문서 탐색 자동화</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="assets/vendor/three.min.js"></script>
+    <script src="concepts.js"></script>
+  </body>
+</html>
