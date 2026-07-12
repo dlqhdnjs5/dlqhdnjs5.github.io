@@ -212,22 +212,6 @@ a:focus-visible {
   width: min(calc(100vw - 190px), 1260px);
   height: min(calc(100dvh - 158px), 820px);
   place-items: center;
-  perspective: 2200px;
-  transform-style: preserve-3d;
-}
-
-.book-ground-shadow {
-  position: absolute;
-  top: 15%;
-  right: 4%;
-  bottom: 4%;
-  left: 4%;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.66);
-  filter: blur(34px);
-  opacity: 0.75;
-  transform: translateY(32px) rotateX(70deg);
-  transition: transform 600ms ease, opacity 600ms ease;
 }
 
 .book-spine-shadow {
@@ -249,16 +233,11 @@ body[data-orientation="landscape"] .book-spine-shadow {
   opacity: 0.8;
 }
 
-body[data-book-state="flipping"] .book-ground-shadow {
-  opacity: 0.94;
-  transform: translateY(41px) rotateX(70deg) scaleX(1.03);
-}
-
 .magazine-book {
   position: relative;
   z-index: 10;
   opacity: 0;
-  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.38));
   transition: opacity 280ms ease;
 }
 
@@ -1424,13 +1403,6 @@ noscript {
   .book-stage {
     width: calc(100vw - 16px);
     height: calc(100dvh - var(--header-height) - var(--footer-height) - 12px);
-  }
-
-  .book-ground-shadow {
-    top: 21%;
-    right: 8%;
-    left: 8%;
-    filter: blur(22px);
   }
 
   .reader-controls {
