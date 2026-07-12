@@ -1,203 +1,333 @@
-(() => {
-  const spreads = [...document.querySelectorAll(".spread[data-page]")];
-  const pageTabs = [...document.querySelectorAll(".chapter-tabs [data-page-target]")];
-  const pageTargets = [...document.querySelectorAll("[data-page-target]")];
-  const previousButton = document.querySelector("#prev-page");
-  const nextButton = document.querySelector("#next-page");
-  const pageCounter = document.querySelector("#page-counter");
-  const progressFill = document.querySelector("#page-progress-fill");
-  const currentTitle = document.querySelector("#current-title");
-  const currentKicker = document.querySelector("#current-kicker");
-  const notesToggle = document.querySelector("#notes-toggle");
-  const magazine = document.querySelector("#magazine");
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+import * as THREE from "./assets/vendor/three.module.min.js";
 
-  if (!spreads.length) return;
+const bookElement = document.querySelector("#magazine-book");
+const bookStage = document.querySelector("#book-stage");
+const pageElements = [...document.querySelectorAll(".mag-page")];
+const turnTargets = [...document.querySelectorAll("[data-turn-page]")];
+const chapterButtons = [...document.querySelectorAll(".chapter-index [data-turn-page]")];
+const previousButton = document.querySelector("#prev-page");
+const nextButton = document.querySelector("#next-page");
+const pageCounter = document.querySelector("#page-counter");
+const progressFill = document.querySelector("#page-progress-fill");
+const chapterKicker = document.querySelector("#chapter-kicker");
+const chapterTitle = document.querySelector("#chapter-title");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  let currentPage = 0;
-  let touchStartX = 0;
-  let touchStartY = 0;
+const pageMeta = pageElements.map((page, index) => ({
+  index,
+  title: page.dataset.pageName || `Page ${index + 1}`,
+  kicker: page.dataset.pageKicker || "ISSUE 09",
+  slug: page.dataset.pageSlug || `page-${index + 1}`,
+}));
 
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
+const slugToPage = new Map(pageMeta.map((page) => [page.slug, page.index]));
+const pageFlipConstructor = window.St?.PageFlip;
+
+if (!pageFlipConstructor) {
+  throw new Error("PageFlip library failed to load.");
+}
+
+const hashSlug = window.location.hash.replace("#", "");
+const initialPage = slugToPage.get(hashSlug) ?? 0;
+
+const pageFlip = new pageFlipConstructor(bookElement, {
+  width: 600,
+  height: 760,
+  size: "stretch",
+  minWidth: 280,
+  maxWidth: 620,
+  minHeight: 355,
+  maxHeight: 785,
+  drawShadow: true,
+  flippingTime: reducedMotion ? 320 : 1180,
+  usePortrait: true,
+  startZIndex: 10,
+  startPage: initialPage,
+  autoSize: true,
+  maxShadowOpacity: 0.78,
+  showCover: true,
+  mobileScrollSupport: false,
+  swipeDistance: 24,
+  clickEventForward: true,
+  useMouseEvents: true,
+  disableFlipByClick: false,
+});
+
+function visiblePageLabel(index) {
+  const orientation = pageFlip.getOrientation();
+  const total = pageMeta.length;
+
+  if (index === 0) return `COVER / ${total}`;
+  if (index >= total - 1) return `BACK / ${total}`;
+
+  if (orientation === "landscape") {
+    const end = Math.min(index + 1, total - 1);
+    return `${String(index).padStart(2, "0")}–${String(end).padStart(2, "0")} / ${total}`;
   }
 
-  function pageFromHash() {
-    const slug = window.location.hash.replace("#", "");
-    if (!slug) return 0;
-    const index = spreads.findIndex((spread) => spread.id === `page-${slug}`);
-    return index >= 0 ? index : 0;
-  }
+  return `${String(index).padStart(2, "0")} / ${total}`;
+}
 
-  function updateHash(index) {
-    const slug = spreads[index].id.replace("page-", "");
-    const target = index === 0
-      ? `${window.location.pathname}${window.location.search}`
-      : `${window.location.pathname}${window.location.search}#${slug}`;
-    window.history.replaceState(null, "", target);
-  }
+function activeChapterPage(index) {
+  if (index >= 9) return 9;
+  if (index >= 7) return 7;
+  return index;
+}
 
-  function revealPage(index, options = {}) {
-    const nextIndex = clamp(Number(index), 0, spreads.length - 1);
-    const direction = nextIndex >= currentPage ? "forward" : "back";
-    const samePage = nextIndex === currentPage;
-    document.body.dataset.direction = direction;
+function syncReader(index) {
+  const safeIndex = Math.max(0, Math.min(index, pageMeta.length - 1));
+  const meta = pageMeta[safeIndex];
+  const chapterPage = activeChapterPage(safeIndex);
 
-    spreads.forEach((spread, spreadIndex) => {
-      const active = spreadIndex === nextIndex;
-      spread.classList.toggle("is-active", active);
-      spread.setAttribute("aria-hidden", String(!active));
-      spread.inert = !active;
-      if (active) spread.scrollTop = 0;
-    });
+  chapterKicker.textContent = meta.kicker;
+  chapterTitle.textContent = meta.title;
+  pageCounter.textContent = visiblePageLabel(safeIndex);
+  progressFill.style.width = `${((safeIndex + 1) / pageMeta.length) * 100}%`;
+  previousButton.disabled = safeIndex === 0;
+  nextButton.disabled = safeIndex >= pageMeta.length - 1;
 
-    pageTabs.forEach((tab) => {
-      const active = Number(tab.dataset.pageTarget) === nextIndex;
-      tab.setAttribute("aria-selected", String(active));
-      tab.tabIndex = active ? 0 : -1;
-      if (active) tab.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "nearest", inline: "center" });
-    });
-
-    const activeSpread = spreads[nextIndex];
-    currentPage = nextIndex;
-    currentTitle.textContent = activeSpread.dataset.title || "Issue 09";
-    currentKicker.textContent = activeSpread.dataset.kicker || "LEE BOWON";
-    pageCounter.textContent = `${String(nextIndex + 1).padStart(2, "0")} / ${String(spreads.length).padStart(2, "0")}`;
-    progressFill.style.width = `${((nextIndex + 1) / spreads.length) * 100}%`;
-    previousButton.disabled = nextIndex === 0;
-    nextButton.disabled = nextIndex === spreads.length - 1;
-
-    if (options.updateHash !== false) updateHash(nextIndex);
-
-    if (options.focusHeading && !samePage) {
-      window.setTimeout(() => {
-        activeSpread.querySelector("h1, h2")?.focus({ preventScroll: true });
-      }, reducedMotion ? 0 : 460);
+  chapterButtons.forEach((button) => {
+    const target = Number(button.dataset.turnPage);
+    if (target === chapterPage) {
+      button.setAttribute("aria-current", "page");
+    } else {
+      button.removeAttribute("aria-current");
     }
-  }
-
-  pageTargets.forEach((target) => {
-    target.addEventListener("click", () => {
-      revealPage(target.dataset.pageTarget, { focusHeading: target.closest(".contents-list") !== null });
-    });
   });
 
-  previousButton.addEventListener("click", () => revealPage(currentPage - 1, { focusHeading: true }));
-  nextButton.addEventListener("click", () => revealPage(currentPage + 1, { focusHeading: true }));
-
-  function setNotes(open) {
-    document.body.classList.toggle("show-notes", open);
-    notesToggle.setAttribute("aria-pressed", String(open));
+  if (window.location.hash !== `#${meta.slug}`) {
+    window.history.replaceState(null, "", `#${meta.slug}`);
   }
+}
 
-  notesToggle.addEventListener("click", () => {
-    setNotes(!document.body.classList.contains("show-notes"));
+function turnToPage(target) {
+  const pageIndex = Math.max(0, Math.min(Number(target), pageMeta.length - 1));
+  const currentIndex = pageFlip.getCurrentPageIndex();
+
+  if (pageIndex === currentIndex) return;
+
+  const corner = pageIndex > currentIndex ? "bottom" : "top";
+  pageFlip.flip(pageIndex, corner);
+}
+
+pageFlip.on("init", (event) => {
+  document.body.classList.add("book-ready");
+  document.body.dataset.orientation = event.data.mode;
+  syncReader(event.data.page);
+});
+
+pageFlip.on("flip", (event) => {
+  syncReader(event.data);
+});
+
+pageFlip.on("changeOrientation", (event) => {
+  document.body.dataset.orientation = event.data;
+  syncReader(pageFlip.getCurrentPageIndex());
+});
+
+pageFlip.on("changeState", (event) => {
+  document.body.dataset.bookState = event.data;
+});
+
+pageFlip.loadFromHTML(document.querySelectorAll(".mag-page"));
+
+turnTargets.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    event.stopPropagation();
+    turnToPage(button.dataset.turnPage);
   });
+});
 
-  const projectTabs = [...document.querySelectorAll(".project-switcher [data-project-target]")];
-  const projectPanels = [...document.querySelectorAll(".project-panel[data-project]")];
+previousButton.addEventListener("click", () => pageFlip.flipPrev("top"));
+nextButton.addEventListener("click", () => pageFlip.flipNext("bottom"));
 
-  function revealProject(projectName, focusPanel = false) {
-    projectTabs.forEach((tab) => {
-      const active = tab.dataset.projectTarget === projectName;
-      tab.setAttribute("aria-selected", String(active));
-      tab.tabIndex = active ? 0 : -1;
-    });
+window.addEventListener("keydown", (event) => {
+  if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
 
-    projectPanels.forEach((panel) => {
-      const active = panel.dataset.project === projectName;
-      panel.classList.toggle("is-active", active);
-      panel.setAttribute("aria-hidden", String(!active));
-      panel.inert = !active;
-      if (active && focusPanel) panel.querySelector("h3")?.focus({ preventScroll: true });
-    });
-  }
-
-  projectTabs.forEach((tab) => {
-    tab.addEventListener("click", () => revealProject(tab.dataset.projectTarget));
-    tab.addEventListener("keydown", (event) => {
-      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
-      event.preventDefault();
-      event.stopPropagation();
-      const currentIndex = projectTabs.indexOf(tab);
-      let nextIndex = currentIndex;
-      if (event.key === "ArrowLeft") nextIndex = currentIndex - 1;
-      if (event.key === "ArrowRight") nextIndex = currentIndex + 1;
-      if (event.key === "Home") nextIndex = 0;
-      if (event.key === "End") nextIndex = projectTabs.length - 1;
-      nextIndex = (nextIndex + projectTabs.length) % projectTabs.length;
-      projectTabs[nextIndex].focus();
-      revealProject(projectTabs[nextIndex].dataset.projectTarget);
-    });
-  });
-
-  document.querySelector(".chapter-tabs")?.addEventListener("keydown", (event) => {
-    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
     event.preventDefault();
-    let nextIndex = currentPage;
-    if (event.key === "ArrowLeft") nextIndex = currentPage - 1;
-    if (event.key === "ArrowRight") nextIndex = currentPage + 1;
-    if (event.key === "Home") nextIndex = 0;
-    if (event.key === "End") nextIndex = spreads.length - 1;
-    nextIndex = clamp(nextIndex, 0, spreads.length - 1);
-    pageTabs[nextIndex].focus();
-    revealPage(nextIndex);
+    pageFlip.flipPrev("top");
+  }
+
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    pageFlip.flipNext("bottom");
+  }
+
+  if (event.key === "Home") {
+    event.preventDefault();
+    turnToPage(0);
+  }
+
+  if (event.key === "End") {
+    event.preventDefault();
+    turnToPage(pageMeta.length - 1);
+  }
+});
+
+window.addEventListener("hashchange", () => {
+  const target = slugToPage.get(window.location.hash.replace("#", ""));
+  if (typeof target === "number" && target !== pageFlip.getCurrentPageIndex()) {
+    turnToPage(target);
+  }
+});
+
+document.querySelectorAll("img[data-fallback]").forEach((image) => {
+  image.addEventListener("error", () => {
+    if (image.src.endsWith(image.dataset.fallback)) return;
+    image.src = image.dataset.fallback;
+  });
+});
+
+function createReadingRoomScene() {
+  const canvas = document.querySelector("#room-canvas");
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setSize(window.innerWidth, window.innerHeight, false);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.08;
+  renderer.setClearColor(0x101315, 1);
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x101315, 10, 31);
+
+  const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 60);
+  camera.position.set(0, 7.2, 12.5);
+  camera.lookAt(0, -1.4, 0);
+
+  const ambient = new THREE.HemisphereLight(0xddeef2, 0x20282b, 1.4);
+  scene.add(ambient);
+
+  const keyLight = new THREE.DirectionalLight(0xfff5e4, 3.2);
+  keyLight.position.set(-5, 9, 6);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.set(1024, 1024);
+  keyLight.shadow.camera.left = -12;
+  keyLight.shadow.camera.right = 12;
+  keyLight.shadow.camera.top = 12;
+  keyLight.shadow.camera.bottom = -12;
+  scene.add(keyLight);
+
+  const cyanLight = new THREE.PointLight(0x2fd5df, 16, 18, 2);
+  cyanLight.position.set(7, 1.5, -4);
+  scene.add(cyanLight);
+
+  const orangeLight = new THREE.PointLight(0xff7048, 12, 15, 2);
+  orangeLight.position.set(-7, 0.5, 1);
+  scene.add(orangeLight);
+
+  const desk = new THREE.Mesh(
+    new THREE.PlaneGeometry(36, 28),
+    new THREE.MeshStandardMaterial({ color: 0x1b2022, roughness: 0.93, metalness: 0.04 }),
+  );
+  desk.rotation.x = -Math.PI / 2;
+  desk.position.y = -2.25;
+  desk.receiveShadow = true;
+  scene.add(desk);
+
+  const backWall = new THREE.Mesh(
+    new THREE.PlaneGeometry(32, 16),
+    new THREE.MeshStandardMaterial({ color: 0x171b1d, roughness: 0.88, metalness: 0.1 }),
+  );
+  backWall.position.set(0, 3.8, -9.5);
+  backWall.receiveShadow = true;
+  scene.add(backWall);
+
+  const accentGroup = new THREE.Group();
+  const accentGeometry = new THREE.BoxGeometry(5.6, 0.07, 0.12);
+  const cyanMaterial = new THREE.MeshStandardMaterial({
+    color: 0x2fd5df,
+    emissive: 0x0c5960,
+    emissiveIntensity: 1.3,
+    roughness: 0.35,
+  });
+  const orangeMaterial = new THREE.MeshStandardMaterial({
+    color: 0xff7048,
+    emissive: 0x6d1d0c,
+    emissiveIntensity: 1.05,
+    roughness: 0.4,
   });
 
-  document.addEventListener("keydown", (event) => {
-    const target = event.target;
-    const editing = target instanceof HTMLElement && (
-      target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)
-    );
-    if (editing || target.closest?.(".project-switcher")) return;
+  const cyanBar = new THREE.Mesh(accentGeometry, cyanMaterial);
+  cyanBar.position.set(5.3, -1.95, -3.8);
+  cyanBar.rotation.y = -0.28;
+  cyanBar.castShadow = true;
+  accentGroup.add(cyanBar);
 
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      revealPage(currentPage - 1, { focusHeading: true });
-    }
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      revealPage(currentPage + 1, { focusHeading: true });
-    }
-    if (event.key.toLowerCase() === "n") {
-      event.preventDefault();
-      setNotes(!document.body.classList.contains("show-notes"));
-    }
-  });
+  const orangeBar = new THREE.Mesh(accentGeometry, orangeMaterial);
+  orangeBar.position.set(-5.1, -2.02, 0.6);
+  orangeBar.rotation.y = 0.34;
+  orangeBar.castShadow = true;
+  accentGroup.add(orangeBar);
 
-  magazine.addEventListener("touchstart", (event) => {
-    touchStartX = event.changedTouches[0].clientX;
-    touchStartY = event.changedTouches[0].clientY;
+  const frameMaterial = new THREE.MeshStandardMaterial({ color: 0x30383b, roughness: 0.5, metalness: 0.55 });
+  const frameTop = new THREE.Mesh(new THREE.BoxGeometry(8.5, 0.09, 0.09), frameMaterial);
+  const frameSide = new THREE.Mesh(new THREE.BoxGeometry(0.09, 4.8, 0.09), frameMaterial);
+  frameTop.position.set(3.8, 5.4, -8.8);
+  frameSide.position.set(8, 3, -8.8);
+  accentGroup.add(frameTop, frameSide);
+  scene.add(accentGroup);
+
+  const pointerTarget = new THREE.Vector2(0, 0);
+  const pointerCurrent = new THREE.Vector2(0, 0);
+  let flipEnergy = 0;
+
+  window.addEventListener("pointermove", (event) => {
+    pointerTarget.x = (event.clientX / window.innerWidth - 0.5) * 2;
+    pointerTarget.y = (event.clientY / window.innerHeight - 0.5) * 2;
   }, { passive: true });
 
-  magazine.addEventListener("touchend", (event) => {
-    const deltaX = event.changedTouches[0].clientX - touchStartX;
-    const deltaY = event.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(deltaX) < 70 || Math.abs(deltaY) > Math.abs(deltaX) * 0.7) return;
-    revealPage(deltaX < 0 ? currentPage + 1 : currentPage - 1);
-  }, { passive: true });
-
-  document.querySelectorAll("img[data-fallback]").forEach((image) => {
-    image.addEventListener("error", () => {
-      if (image.dataset.fallback && image.src !== image.dataset.fallback) {
-        image.src = image.dataset.fallback;
-      }
-    }, { once: true });
-  });
-
-  window.addEventListener("hashchange", () => {
-    const hashPage = pageFromHash();
-    if (hashPage !== currentPage) revealPage(hashPage, { updateHash: false });
-  });
-
-  revealProject(projectTabs[0]?.dataset.projectTarget || "alert");
-  currentPage = pageFromHash();
-  revealPage(currentPage, { updateHash: false });
-
-  window.__issue09 = {
-    getCurrentPage: () => currentPage,
-    goToPage: (index) => revealPage(index),
-    showNotes: setNotes,
-    selectProject: revealProject,
+  const resize = () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight, false);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
   };
-})();
+
+  window.addEventListener("resize", resize, { passive: true });
+
+  const renderFrame = () => {
+    pointerCurrent.lerp(pointerTarget, reducedMotion ? 0.02 : 0.045);
+    const isFlipping = document.body.dataset.bookState === "flipping";
+    flipEnergy += ((isFlipping ? 1 : 0) - flipEnergy) * 0.08;
+
+    camera.position.x = pointerCurrent.x * 0.28;
+    camera.position.y = 7.2 - pointerCurrent.y * 0.16 + flipEnergy * 0.12;
+    camera.lookAt(pointerCurrent.x * 0.12, -1.4, 0);
+    accentGroup.rotation.y = pointerCurrent.x * 0.012;
+    cyanMaterial.emissiveIntensity = 1.3 + flipEnergy * 0.9;
+    orangeMaterial.emissiveIntensity = 1.05 + flipEnergy * 0.55;
+
+    renderer.render(scene, camera);
+    window.requestAnimationFrame(renderFrame);
+  };
+
+  renderFrame();
+  return { renderer, scene, camera, resize };
+}
+
+let readingRoom3D;
+
+try {
+  readingRoom3D = createReadingRoomScene();
+  document.body.classList.add("webgl-ready");
+} catch (error) {
+  document.body.classList.add("webgl-fallback");
+  console.warn("WebGL scene unavailable; using the CSS reading room fallback.", error);
+}
+
+window.__issue09 = {
+  pageFlip,
+  readingRoom3D,
+  turnToPage,
+  getState: () => ({
+    page: pageFlip.getCurrentPageIndex(),
+    pageCount: pageFlip.getPageCount(),
+    orientation: pageFlip.getOrientation(),
+    bookState: document.body.dataset.bookState,
+    webgl: document.body.classList.contains("webgl-ready"),
+  }),
+};

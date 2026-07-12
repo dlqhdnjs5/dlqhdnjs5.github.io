@@ -1,29 +1,51 @@
-# ISSUE 09 | LEE BOWON
+# ISSUE 09 | REAL BOOK EDITION
 
-Interactive editorial portfolio for GitHub Pages. The resume is organized as nine magazine spreads: cover, contents, About, Skill, Achievements Summary, Technical Leadership, Career, Project Detail, and Portfolio.
+An interactive career magazine for GitHub Pages. The portfolio is rendered as a physical 12-page book with a hard cover, two-page editorial spreads, paper curl, dynamic shadows, and a responsive single-page mobile mode.
+
+## Structure
+
+- Front cover
+- Contents
+- About
+- Skill
+- Achievements Summary
+- Technical Leadership
+- Career
+- Project Detail, edited as a two-page feature
+- Portfolio
+- Closing Note
+- Back cover
+
+## Rendering
+
+- `StPageFlip 2.0.7`: paper folding, hard-cover motion, drag/corner interaction, and page shadows
+- `Three.js 0.185.1`: full-screen reading-room scene, physical lighting, depth, and pointer parallax
+- Both libraries are stored in `assets/vendor/` so the GitHub Pages build does not depend on a runtime CDN request.
 
 ## Files
 
-- `index.html`: Magazine content and semantic chapter structure
-- `styles.css`: Editorial layouts, responsive spreads, and page transitions
-- `script.js`: Chapter navigation, keyboard/swipe controls, notes, and project tabs
-- `assets/images/`: Profile and portfolio artwork extracted from the source PDFs
-- `assets/docs/lee-bowon-resume.pdf`: Resume PDF
-- `assets/docs/lee-bowon-portfolio.pdf`: Portfolio PDF
-- `scripts/deploy-github-pages.ps1`: Optional GitHub Pages push helper
+- `index.html`: semantic magazine pages and editorial content
+- `styles.css`: book stage, page layouts, paper surfaces, and responsive typography
+- `script.js`: page engine, chapter navigation, keyboard controls, hashes, image fallback, and 3D scene
+- `assets/images/`: profile and portfolio artwork
+- `assets/docs/lee-bowon-resume.pdf`: resume PDF
+- `assets/docs/lee-bowon-portfolio.pdf`: portfolio PDF
 
 ## Interaction
 
-- Use the chapter tabs or previous/next arrow buttons to move between spreads.
-- Use the left and right arrow keys to change pages.
-- Press `N` or select `Notes` to reveal the editor notes.
-- On Project Detail, select a project tab to switch case studies.
-- Swipe horizontally on touch devices to change pages.
+- Drag or select a page corner to turn the paper.
+- Use the circular previous/next controls or the left/right arrow keys.
+- Select a desktop chapter index item to flip directly to that article.
+- Mobile layouts switch to a single physical page while preserving the curl animation.
 
 ## Preview
 
-Open `index.html` directly or serve the folder with a static web server.
+```sh
+python3 -m http.server 4173 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:4173/`.
 
 ## GitHub Pages
 
-Set the Pages publishing source to the desired branch and `/ (root)`. For this concept branch, select `issue-09`.
+Set the Pages publishing source to `issue-09-real-book` and `/ (root)`.

@@ -5,675 +5,444 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="ISSUE 09 - 문제를 운영 가능한 구조로 바꾸는 9년차 백엔드 개발자 이보원의 인터랙티브 디지털 매거진"
+      content="ISSUE 09 - 9년차 백엔드 개발자 이보원의 3D 인터랙티브 커리어 매거진"
     />
     <meta property="og:title" content="ISSUE 09 | LEE BOWON" />
     <meta
       property="og:description"
-      content="About, Skill, Achievements, Leadership, Career, Project Detail, Portfolio를 한 권의 디지털 매거진으로 읽어보세요."
+      content="책장을 직접 넘기며 읽는 백엔드 개발자 이보원의 인터랙티브 커리어 매거진"
     />
     <meta property="og:type" content="website" />
     <title>ISSUE 09 | LEE BOWON</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body data-direction="forward">
-    <div class="paper-grain" aria-hidden="true"></div>
+  <body data-book-state="read" data-orientation="landscape">
+    <canvas id="room-canvas" aria-hidden="true"></canvas>
 
     <header class="reader-bar">
-      <button class="issue-home" type="button" data-page-target="0" aria-label="표지로 이동">
-        <strong>ISSUE</strong>
-        <span>09</span>
+      <button class="issue-mark" type="button" data-turn-page="0" aria-label="표지로 이동">
+        <span>ISSUE</span><strong>09</strong>
       </button>
 
-      <p class="current-chapter" aria-live="polite">
-        <span id="current-kicker">THE SYSTEMS ISSUE</span>
-        <strong id="current-title">Cover</strong>
+      <p class="chapter-status" aria-live="polite">
+        <span id="chapter-kicker">THE SYSTEMS ISSUE</span>
+        <strong id="chapter-title">Cover</strong>
       </p>
 
-      <div class="reader-tools">
-        <button id="notes-toggle" class="notes-toggle" type="button" aria-pressed="false">
-          Notes
-        </button>
+      <nav class="reader-links" aria-label="외부 문서">
         <a href="assets/docs/lee-bowon-resume.pdf" target="_blank" rel="noreferrer">Resume</a>
         <a href="https://github.com/dlqhdnjs5" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
+      </nav>
     </header>
 
-    <nav class="chapter-tabs" role="tablist" aria-label="매거진 챕터">
-      <button role="tab" type="button" data-page-target="0" aria-controls="page-cover" aria-selected="true">
-        Cover
-      </button>
-      <button role="tab" type="button" data-page-target="1" aria-controls="page-contents" aria-selected="false">
-        Contents
-      </button>
-      <button role="tab" type="button" data-page-target="2" aria-controls="page-about" aria-selected="false">
-        About
-      </button>
-      <button role="tab" type="button" data-page-target="3" aria-controls="page-skill" aria-selected="false">
-        Skill
-      </button>
-      <button role="tab" type="button" data-page-target="4" aria-controls="page-achievements" aria-selected="false">
-        Achievements
-      </button>
-      <button role="tab" type="button" data-page-target="5" aria-controls="page-leadership" aria-selected="false">
-        Leadership
-      </button>
-      <button role="tab" type="button" data-page-target="6" aria-controls="page-career" aria-selected="false">
-        Career
-      </button>
-      <button role="tab" type="button" data-page-target="7" aria-controls="page-projects" aria-selected="false">
-        Project Detail
-      </button>
-      <button role="tab" type="button" data-page-target="8" aria-controls="page-portfolio" aria-selected="false">
-        Portfolio
-      </button>
-    </nav>
+    <main class="reading-room">
+      <nav class="chapter-index" aria-label="잡지 목차">
+        <button type="button" data-turn-page="1"><span>01</span>Contents</button>
+        <button type="button" data-turn-page="2"><span>02</span>About</button>
+        <button type="button" data-turn-page="3"><span>03</span>Skill</button>
+        <button type="button" data-turn-page="4"><span>04</span>Achievements</button>
+        <button type="button" data-turn-page="5"><span>05</span>Leadership</button>
+        <button type="button" data-turn-page="6"><span>06</span>Career</button>
+        <button type="button" data-turn-page="7"><span>07</span>Project Detail</button>
+        <button type="button" data-turn-page="9"><span>08</span>Portfolio</button>
+      </nav>
 
-    <main class="magazine" id="magazine">
-      <section
-        class="spread cover-spread is-active"
-        id="page-cover"
-        data-page="0"
-        data-title="Cover"
-        data-kicker="THE SYSTEMS ISSUE"
-        role="tabpanel"
-        aria-label="표지"
-        aria-hidden="false"
-      >
-        <img class="cover-photo" src="assets/images/lee-bowon.jpg" alt="백엔드 개발자 이보원" />
-        <div class="cover-shade" aria-hidden="true"></div>
-        <div class="cover-masthead">
-          <p>THE SYSTEMS ISSUE / 2026</p>
-          <h1>
-            <span>ISSUE</span>
-            <strong>09</strong>
-          </h1>
-        </div>
-        <div class="cover-story">
-          <p class="section-label">LEE BOWON / BACKEND DEVELOPER</p>
-          <h2>문제를 운영 가능한 구조로 바꾸는 사람</h2>
-          <p>
-            대용량 데이터, 장애 대응, 운영 자동화 그리고 AI Application까지.
-            9년의 선택과 결과를 한 권의 인터랙티브 매거진으로 엮었습니다.
-          </p>
-        </div>
-        <div class="cover-index" aria-label="표지 핵심 키워드">
-          <span>09 YEARS</span>
-          <span>JAVA / KOTLIN</span>
-          <span>KAFKA / REDIS</span>
-          <span>AI APPLICATION</span>
-        </div>
-        <button class="open-issue" type="button" data-page-target="1">
-          Open the issue
-        </button>
-        <p class="margin-note cover-note">
-          기록은 결과보다 판단의 과정을 오래 남깁니다.
-        </p>
-      </section>
+      <div class="book-stage" id="book-stage">
+        <div class="book-ground-shadow" aria-hidden="true"></div>
+        <div class="book-spine-shadow" aria-hidden="true"></div>
 
-      <section
-        class="spread contents-spread"
-        id="page-contents"
-        data-page="1"
-        data-title="Contents"
-        data-kicker="SEVEN COMPLETE CHAPTERS"
-        role="tabpanel"
-        aria-label="목차"
-        aria-hidden="true"
-      >
-        <div class="spread-inner contents-layout">
-          <header class="contents-intro">
-            <p class="section-label dark">ISSUE 09 / TABLE OF CONTENTS</p>
-            <h2 tabindex="-1">Contents</h2>
-            <p>
-              숫자 하나, 기술 하나로 잘게 나누지 않았습니다. 경력기술서의 대주제를
-              각각 하나의 완결된 챕터로 읽을 수 있도록 구성했습니다.
-            </p>
-            <blockquote>
-              “기능을 구현하는 개발자에서 시스템의 생명주기를 설계하는 개발자로.”
-            </blockquote>
-          </header>
-
-          <ol class="contents-list">
-            <li>
-              <button type="button" data-page-target="2">
-                <span>01</span><strong>About</strong><small>어떤 개발자인가</small>
-              </button>
-            </li>
-            <li>
-              <button type="button" data-page-target="3">
-                <span>02</span><strong>Skill</strong><small>무엇을 다루는가</small>
-              </button>
-            </li>
-            <li>
-              <button type="button" data-page-target="4">
-                <span>03</span><strong>Achievements Summary</strong><small>무엇을 개선했는가</small>
-              </button>
-            </li>
-            <li>
-              <button type="button" data-page-target="5">
-                <span>04</span><strong>Technical Leadership</strong><small>어떻게 함께 일하는가</small>
-              </button>
-            </li>
-            <li>
-              <button type="button" data-page-target="6">
-                <span>05</span><strong>Career</strong><small>어떻게 성장했는가</small>
-              </button>
-            </li>
-            <li>
-              <button type="button" data-page-target="7">
-                <span>06</span><strong>Project Detail</strong><small>어떻게 해결했는가</small>
-              </button>
-            </li>
-            <li>
-              <button type="button" data-page-target="8">
-                <span>07</span><strong>Portfolio</strong><small>무엇을 만들었는가</small>
-              </button>
-            </li>
-          </ol>
-
-          <aside class="contents-sidebar">
-            <span>READING GUIDE</span>
-            <p>상단 탭이나 좌우 화살표로 원하는 순서대로 읽을 수 있습니다.</p>
-            <p><strong>Notes</strong>를 켜면 각 챕터에 남긴 개인적인 편집자 노트가 나타납니다.</p>
-          </aside>
-        </div>
-        <p class="folio">02 / 09</p>
-      </section>
-
-      <section
-        class="spread about-spread"
-        id="page-about"
-        data-page="2"
-        data-title="About"
-        data-kicker="PROFILE / POINT OF VIEW"
-        role="tabpanel"
-        aria-label="소개"
-        aria-hidden="true"
-      >
-        <div class="spread-inner about-layout">
-          <figure class="about-portrait">
-            <img src="assets/images/lee-bowon.jpg" alt="이보원 프로필 사진" />
-            <figcaption>LEE BOWON / SEOUL, KOREA</figcaption>
-          </figure>
-
-          <article class="about-copy">
-            <p class="section-label">01 / ABOUT</p>
-            <h2 tabindex="-1">시도를 좋아하는 9년차 백엔드 개발자</h2>
-            <p class="about-lede">
-              Java/Kotlin, Spring Boot, Kafka, MySQL, Redis 기반의 백엔드 시스템을
-              개발하고 운영해왔습니다.
-            </p>
-            <div class="about-columns">
-              <p>
-                서비스와 인프라 이벤트 처리, Rule 기반 탐지, 사용자 알림 발송,
-                대용량 Metric 처리, Spring Batch 집계, Kafka 비동기 처리처럼
-                운영 안정성이 중요한 시스템을 주로 담당했습니다.
-              </p>
-              <p>
-                최근에는 LLM, RAG, Tool Calling을 활용해 사내 업무 자동화와
-                개발 생산성을 개선하는 AI Application에 가장 큰 관심을 두고 있습니다.
-              </p>
+        <div class="magazine-book" id="magazine-book">
+          <section
+            class="mag-page cover-page"
+            data-density="hard"
+            data-page-name="Cover"
+            data-page-kicker="THE SYSTEMS ISSUE"
+            data-page-slug="cover"
+          >
+            <img class="cover-photo" src="assets/images/lee-bowon.jpg" alt="백엔드 개발자 이보원" />
+            <div class="cover-ink" aria-hidden="true"></div>
+            <div class="cover-topline">
+              <span>THE SYSTEMS ISSUE</span>
+              <span>SEOUL / 2026</span>
             </div>
-            <blockquote>
-              “새로운 기술을 빠르게 써보는 것보다, 실제 운영 가능한 형태로 만드는 일을 좋아합니다.”
-            </blockquote>
-            <div class="about-links">
-              <a href="mailto:dlqhdnjs5@naver.com">dlqhdnjs5@naver.com</a>
-              <a href="https://github.com/dlqhdnjs5" target="_blank" rel="noreferrer">github.com/dlqhdnjs5</a>
+            <h1 class="cover-title"><span>ISSUE</span><strong>09</strong></h1>
+            <div class="cover-feature">
+              <p>LEE BOWON / BACKEND DEVELOPER</p>
+              <h2>문제를 운영 가능한 구조로 바꾸는 사람</h2>
+              <span>Systems · Reliability · AI Application</span>
             </div>
-          </article>
+            <button class="cover-open" type="button" data-turn-page="1">OPEN</button>
+          </section>
 
-          <aside class="about-facts" aria-label="프로필 요약">
-            <div><span>CAREER</span><strong>9 years</strong></div>
-            <div><span>FOCUS</span><strong>Reliability</strong></div>
-            <div><span>METHOD</span><strong>Problem first</strong></div>
-            <div><span>NEXT</span><strong>AI Application</strong></div>
-          </aside>
-        </div>
-        <p class="margin-note">운영 안정성은 장애 이후의 대응보다, 장애 이전의 설계에 가깝다고 생각합니다.</p>
-        <p class="folio">03 / 09</p>
-      </section>
-
-      <section
-        class="spread skill-spread"
-        id="page-skill"
-        data-page="3"
-        data-title="Skill"
-        data-kicker="WORKING RANGE / TECH INDEX"
-        role="tabpanel"
-        aria-label="기술 스택"
-        aria-hidden="true"
-      >
-        <div class="spread-inner skill-layout">
-          <header class="skill-heading">
-            <p class="section-label light">02 / SKILL</p>
-            <h2 tabindex="-1">A stack built around operation.</h2>
-            <p>
-              기술을 유행이나 숙련도 막대로 보여주지 않습니다. 실제 시스템에서 맡아온
-              역할과 연결해 네 개의 작업 영역으로 정리했습니다.
-            </p>
-          </header>
-
-          <div class="skill-index">
-            <article>
-              <span class="skill-number">A</span>
-              <p class="skill-type">BACKEND DEVELOPMENT</p>
-              <h3>Core systems</h3>
-              <p>Java · Kotlin · Spring Boot · Spring Batch · WebFlux · MyBatis · JPA</p>
-              <small>API, 이벤트 처리, 집계 배치, 멀티모듈 구조</small>
-            </article>
-            <article>
-              <span class="skill-number">B</span>
-              <p class="skill-type">DATABASE & MESSAGING</p>
-              <h3>Data flow</h3>
-              <p>MySQL · Redis · Redis Sentinel · Kafka · ReactiveKafka</p>
-              <small>대용량 Metric, Consumer Lag, Retry, 중복 방지</small>
-            </article>
-            <article>
-              <span class="skill-number">C</span>
-              <p class="skill-type">DEVOPS & CLOUD</p>
-              <h3>Running systems</h3>
-              <p>AWS · Naver Cloud · Apache · Nginx · Docker · Shell Script</p>
-              <small>서버 구성, 버전업 자동화, 이중화, 배포와 롤백</small>
-            </article>
-            <article>
-              <span class="skill-number">D</span>
-              <p class="skill-type">AI & INTERFACE</p>
-              <h3>Extending work</h3>
-              <p>LLM · RAG · Tool Calling · TypeScript · React · Next.js</p>
-              <small>AI 챗봇, 코드리뷰 자동화, Agent Prototype</small>
-            </article>
-          </div>
-
-          <aside class="skill-statement">
-            <span>PRIMARY AXIS</span>
-            <strong>BUILD</strong>
-            <i></i>
-            <strong>OPERATE</strong>
-            <i></i>
-            <strong>IMPROVE</strong>
-          </aside>
-        </div>
-        <p class="margin-note">기술 선택의 기준은 익숙함보다, 운영 중 발생할 문제를 설명할 수 있는가입니다.</p>
-        <p class="folio light">04 / 09</p>
-      </section>
-
-      <section
-        class="spread achievements-spread"
-        id="page-achievements"
-        data-page="4"
-        data-title="Achievements Summary"
-        data-kicker="SCALE / SPEED / RELIABILITY"
-        role="tabpanel"
-        aria-label="성과 요약"
-        aria-hidden="true"
-      >
-        <div class="spread-inner achievements-layout">
-          <header class="achievements-heading">
-            <p class="section-label dark">03 / ACHIEVEMENTS SUMMARY</p>
-            <h2 tabindex="-1">From scale<br />to stability.</h2>
-            <p>
-              성과를 개별 프로젝트 조각으로 분리하지 않고, 9년 동안 반복해서 해결해 온
-              규모·속도·안정성의 문제를 하나의 요약으로 묶었습니다.
-            </p>
-          </header>
-
-          <div class="achievement-metrics" aria-label="핵심 성과 수치">
-            <article class="metric metric-scale">
-              <span>METRIC STREAM</span>
-              <strong>약 1억 건</strong>
-              <p>약 9천만 건 필터링, 유효 Metric 약 1천만 건 저장</p>
-            </article>
-            <article class="metric metric-query">
-              <span>QUERY RESPONSE</span>
-              <strong>10초대 → 0~1초대</strong>
-              <p>실행 계획 분석, Index 추가, 쿼리 분할과 구조 개선</p>
-            </article>
-            <article class="metric metric-batch">
-              <span>BATCH PROCESSING</span>
-              <strong>20분 이상 → 5분 미만</strong>
-              <p>처리 구조 변경, 멀티 스레드, 대용량 집계 병목 개선</p>
-            </article>
-          </div>
-
-          <div class="achievement-summary">
-            <article>
-              <span>01</span>
-              <h3>Event Alert</h3>
-              <p>IDC 이중화, Failover, DR, Retry, 중복 방지를 반영한 탐지 알림 모듈 설계.</p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Kafka HA</h3>
-              <p>Active-Active, Health Check와 자동 전환 구조로 IDC 장애 상황에 대응.</p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Redis Sentinel</h3>
-              <p>보안 취약점 대응을 위한 무중단 버전업, 롤링 업데이트와 롤백 절차 수립.</p>
-            </article>
-          </div>
-        </div>
-        <p class="margin-note">빠른 숫자보다 중요한 것은, 같은 문제가 다시 생기지 않는 구조를 남기는 것입니다.</p>
-        <p class="folio">05 / 09</p>
-      </section>
-
-      <section
-        class="spread leadership-spread"
-        id="page-leadership"
-        data-page="5"
-        data-title="Technical Leadership"
-        data-kicker="HOW I WORK WITH A TEAM"
-        role="tabpanel"
-        aria-label="기술 리더십과 협업"
-        aria-hidden="true"
-      >
-        <div class="spread-inner leadership-layout">
-          <header class="leadership-heading">
-            <p class="section-label light">04 / TECHNICAL LEADERSHIP & COLLABORATION</p>
-            <h2 tabindex="-1">운영의 기준을 함께 만드는 역할</h2>
-          </header>
-
-          <blockquote class="leadership-quote">
-            “단순히 구현을 끝내는 것이 아니라, 장애·재처리·데이터 정합성까지 팀이 함께
-            판단할 수 있는 기준을 만드는 데 집중합니다.”
-          </blockquote>
-
-          <div class="leadership-principles">
-            <article>
-              <span>DEFINE</span>
-              <h3>시나리오를 먼저 정의합니다.</h3>
-              <p>프로젝트 초기 단계에서 장애 시나리오, 처리 흐름, 배포와 롤백 절차를 문서화합니다.</p>
-            </article>
-            <article>
-              <span>ALIGN</span>
-              <h3>구현 방향을 함께 맞춥니다.</h3>
-              <p>코드리뷰와 페어 코딩으로 팀 내 기준을 공유하고 유지보수 가능한 구조를 만듭니다.</p>
-            </article>
-            <article>
-              <span>VERIFY</span>
-              <h3>운영 리스크를 미리 검증합니다.</h3>
-              <p>배포 전 검증 항목과 장애 대응 절차를 정리해 변경 작업의 위험을 낮춥니다.</p>
-            </article>
-            <article>
-              <span>EXTEND</span>
-              <h3>다음 문제까지 고려합니다.</h3>
-              <p>신규 기능에서 재처리, 중복, 데이터 정합성과 실제 운영 중 발생할 문제를 함께 검토합니다.</p>
-            </article>
-          </div>
-
-          <div class="leadership-flow" aria-label="기술 리더십 작업 흐름">
-            <span>Scenario</span><i></i><span>Architecture</span><i></i><span>Review</span><i></i><span>Operation</span>
-          </div>
-        </div>
-        <p class="margin-note">리더십은 답을 대신 내리는 일이 아니라, 좋은 판단을 반복할 수 있는 환경을 만드는 일입니다.</p>
-        <p class="folio light">06 / 09</p>
-      </section>
-
-      <section
-        class="spread career-spread"
-        id="page-career"
-        data-page="6"
-        data-title="Career"
-        data-kicker="2018 — PRESENT"
-        role="tabpanel"
-        aria-label="경력"
-        aria-hidden="true"
-      >
-        <div class="spread-inner career-layout">
-          <header class="career-heading">
-            <p class="section-label dark">05 / CAREER</p>
-            <h2 tabindex="-1">문제 해결 중심의 커리어</h2>
-            <p>
-              커머스 서비스 개발에서 출발해 대규모 인프라 데이터와 장애 대응,
-              운영 자동화를 설계하는 개발자로 확장해왔습니다.
-            </p>
-          </header>
-
-          <div class="career-line">
-            <article class="career-entry current">
-              <time>2021.04 — PRESENT</time>
-              <div class="career-company">
-                <span>PLATFORM / INFRASTRUCTURE</span>
-                <h3>엔테크서비스</h3>
-                <strong>백엔드 개발자</strong>
-              </div>
-              <p>
-                사내 서비스 인프라 이벤트 탐지 알림, 네이버 서버 관제 시스템 고도화,
-                Kafka IDC 이중화, Redis Sentinel 운영 안정화, AI 업무 자동화 기능을 담당했습니다.
-              </p>
-              <ul>
-                <li>Event Alert & Monitoring</li>
-                <li>Kafka HA & Redis Sentinel</li>
-                <li>AI Application</li>
-              </ul>
-            </article>
-
-            <article class="career-entry">
-              <time>2018.02 — 2021.04</time>
-              <div class="career-company">
-                <span>COMMERCE / SERVICE</span>
-                <h3>플그림</h3>
-                <strong>백엔드 개발자</strong>
-              </div>
-              <p>
-                네이버 Glyde, 삼성물산 SSF SHOP, Discovery Expedition 이커머스 구축과
-                고도화에서 전시, 상품, 정산 배치, 백오피스 개발을 맡았습니다.
-              </p>
-              <ul>
-                <li>Display & Product</li>
-                <li>Settlement Batch</li>
-                <li>Back Office</li>
-              </ul>
-            </article>
-          </div>
-
-          <aside class="career-footnote">
-            <span>EDUCATION</span>
-            <strong>청운대학교 컴퓨터학과</strong>
-            <p>2012.02 — 2018.02 / 정보처리기사</p>
-          </aside>
-        </div>
-        <p class="margin-note">도메인은 달라졌지만, 데이터를 정확히 처리하고 운영자가 믿을 수 있게 만드는 일은 이어져 왔습니다.</p>
-        <p class="folio">07 / 09</p>
-      </section>
-
-      <section
-        class="spread projects-spread"
-        id="page-projects"
-        data-page="7"
-        data-title="Project Detail"
-        data-kicker="FIVE CASE STUDIES"
-        role="tabpanel"
-        aria-label="프로젝트 상세"
-        aria-hidden="true"
-      >
-        <div class="spread-inner projects-layout">
-          <header class="projects-heading">
-            <p class="section-label light">06 / PROJECT DETAIL</p>
-            <h2 tabindex="-1">Five systems,<br />one operating principle.</h2>
-            <p>프로젝트 탭을 선택하면 해당 사례의 문제, 기여, 결과를 한 화면에서 확인할 수 있습니다.</p>
-          </header>
-
-          <div class="project-switcher" role="tablist" aria-label="프로젝트 선택">
-            <button type="button" role="tab" data-project-target="alert" aria-selected="true">Event Alert</button>
-            <button type="button" role="tab" data-project-target="ai" aria-selected="false">AI Application</button>
-            <button type="button" role="tab" data-project-target="monitoring" aria-selected="false">Monitoring</button>
-            <button type="button" role="tab" data-project-target="ha" aria-selected="false">Kafka HA</button>
-            <button type="button" role="tab" data-project-target="migration" aria-selected="false">Migration</button>
-          </div>
-
-          <div class="project-panels">
-            <article class="project-panel is-active" data-project="alert" role="tabpanel" aria-hidden="false">
-              <header>
-                <p>2026.05 — 2026.06 / TEAM 4</p>
-                <h3>서비스 인프라 이벤트 탐지 알림 모듈</h3>
-                <span>Rule 기반 이벤트를 사용자에게 안정적으로 전달하는 알림 흐름을 설계했습니다.</span>
+          <section
+            class="mag-page toc-page paper-white"
+            data-page-name="Contents"
+            data-page-kicker="HOW TO READ ISSUE 09"
+            data-page-slug="contents"
+          >
+            <div class="page-sheet">
+              <header class="page-header">
+                <span>01</span><strong>Contents</strong><small>ISSUE 09</small>
               </header>
-              <div class="case-columns">
-                <div><strong>PROBLEM</strong><p>이중화 환경의 재시도·재처리 과정에서 알림 유실과 중복 가능성.</p></div>
-                <div><strong>CONTRIBUTION</strong><p>멀티모듈 책임 분리, Kafka 통신, Retry, Deduplication, DR 흐름 설계.</p></div>
-                <div><strong>RESULT</strong><p>Failover 상황에서도 지속 가능한 알림 처리 구조와 프로젝트별 AI Agent 규칙 수립.</p></div>
+              <div class="toc-intro">
+                <p class="eyebrow">A CAREER, EDITED BY SUBJECT</p>
+                <h2>한 사람의 경력을<br />여덟 개의 주제로 읽습니다.</h2>
+                <p>
+                  성과를 작은 조각으로 흩뜨리지 않고, 소개·기술·성과·리더십·경력·프로젝트·포트폴리오를
+                  각각 하나의 완결된 기사로 편집했습니다.
+                </p>
               </div>
-              <p class="case-stack">Spring Boot · Spring Batch · Java 25 · Kafka · MySQL · React · Nginx</p>
-            </article>
+              <ol class="toc-list">
+                <li><button type="button" data-turn-page="2"><span>02</span><strong>About</strong><small>어떤 개발자인가</small></button></li>
+                <li><button type="button" data-turn-page="3"><span>03</span><strong>Skill</strong><small>무엇을 다루는가</small></button></li>
+                <li><button type="button" data-turn-page="4"><span>04</span><strong>Achievements</strong><small>무엇을 개선했는가</small></button></li>
+                <li><button type="button" data-turn-page="5"><span>05</span><strong>Leadership</strong><small>어떻게 함께 일하는가</small></button></li>
+                <li><button type="button" data-turn-page="6"><span>06</span><strong>Career</strong><small>어떻게 성장했는가</small></button></li>
+                <li><button type="button" data-turn-page="7"><span>07</span><strong>Project Detail</strong><small>어떻게 해결했는가</small></button></li>
+                <li><button type="button" data-turn-page="9"><span>09</span><strong>Portfolio</strong><small>무엇을 만들었는가</small></button></li>
+              </ol>
+              <p class="page-number">01</p>
+            </div>
+          </section>
 
-            <article class="project-panel" data-project="ai" role="tabpanel" aria-hidden="true">
-              <header>
-                <p>2025.09 — 2026.02 / TEAM 2</p>
+          <section
+            class="mag-page about-page paper-blue"
+            data-page-name="About"
+            data-page-kicker="PROFILE / POINT OF VIEW"
+            data-page-slug="about"
+          >
+            <div class="page-sheet">
+              <header class="page-header light">
+                <span>02</span><strong>About</strong><small>LEE BOWON</small>
+              </header>
+              <figure class="portrait-block">
+                <img src="assets/images/lee-bowon.jpg" alt="이보원 프로필 사진" />
+                <figcaption>SEOUL, KOREA / BACKEND DEVELOPER</figcaption>
+              </figure>
+              <article class="about-article">
+                <p class="eyebrow lime">A DEVELOPER WHO LIKES TO TRY</p>
+                <h2>시도를 좋아하는<br />9년차 백엔드 개발자</h2>
+                <p class="standfirst">
+                  Java/Kotlin, Spring Boot, Kafka, MySQL, Redis 기반의 백엔드 시스템을 개발하고 운영해왔습니다.
+                </p>
+                <div class="two-columns">
+                  <p>
+                    서비스·인프라 이벤트 처리, Rule 기반 탐지, 사용자 알림 발송, 대용량 Metric 처리와
+                    Spring Batch 집계처럼 운영 안정성이 중요한 시스템을 주로 담당했습니다.
+                  </p>
+                  <p>
+                    최근에는 LLM, RAG, Tool Calling을 활용해 업무 자동화와 개발 생산성을 개선하는
+                    AI Application을 실제 흐름에 연결하고 있습니다.
+                  </p>
+                </div>
+                <blockquote>“새로운 기술을 써보는 것보다, 실제 운영 가능한 형태로 만드는 일을 좋아합니다.”</blockquote>
+              </article>
+              <p class="page-number light">02</p>
+            </div>
+          </section>
+
+          <section
+            class="mag-page skill-page paper-ink"
+            data-page-name="Skill"
+            data-page-kicker="TOOLS / OPERATING RANGE"
+            data-page-slug="skill"
+          >
+            <div class="page-sheet">
+              <header class="page-header light">
+                <span>03</span><strong>Skill</strong><small>WORKING RANGE</small>
+              </header>
+              <div class="skill-lead">
+                <p class="eyebrow cyan">NOT A KEYWORD CLOUD</p>
+                <h2>기술은 목록이 아니라<br />운영 범위입니다.</h2>
+                <p>구현부터 데이터 흐름, 배포와 관제, AI 자동화까지 하나의 시스템 생명주기로 다룹니다.</p>
+              </div>
+              <div class="skill-bands">
+                <article>
+                  <span>01 / BACKEND</span>
+                  <h3>Java · Kotlin<br />Spring Boot · Batch</h3>
+                  <p>도메인 모델링, REST API, 배치 처리, 테스트 가능한 구조와 점진적 개선.</p>
+                </article>
+                <article>
+                  <span>02 / DATA & MESSAGE</span>
+                  <h3>Kafka · MySQL<br />Redis · Elasticsearch</h3>
+                  <p>이벤트 흐름, 대용량 집계, 쿼리 최적화, 캐시와 Sentinel 운영.</p>
+                </article>
+                <article>
+                  <span>03 / PLATFORM</span>
+                  <h3>Docker · Nginx<br />CI/CD · Monitoring</h3>
+                  <p>릴리스 시나리오, 관측 가능성, 장애 대응과 롤백 가능한 배포.</p>
+                </article>
+                <article>
+                  <span>04 / AI INTERFACE</span>
+                  <h3>LLM · RAG<br />Tool Calling · Agent</h3>
+                  <p>문서 탐색, 코드 리뷰, API 실행을 업무 흐름에 안전하게 연결.</p>
+                </article>
+              </div>
+              <p class="page-number light">03</p>
+            </div>
+          </section>
+
+          <section
+            class="mag-page achievements-page paper-white"
+            data-page-name="Achievements Summary"
+            data-page-kicker="SCALE INTO STABILITY"
+            data-page-slug="achievements"
+          >
+            <div class="page-sheet">
+              <header class="page-header">
+                <span>04</span><strong>Achievements</strong><small>SUMMARY</small>
+              </header>
+              <div class="achievement-heading">
+                <p class="eyebrow red">FROM SCALE TO STABILITY</p>
+                <h2>성과는 숫자가 아니라<br />운영 방식의 변화입니다.</h2>
+              </div>
+              <div class="metric-ledger">
+                <article>
+                  <span>METRIC STREAM</span>
+                  <strong>약 1억 건</strong>
+                  <p>약 9천만 건 필터링, 유효 Metric 약 1천만 건 저장.</p>
+                </article>
+                <article>
+                  <span>QUERY RESPONSE</span>
+                  <strong>10초대 → 0~1초대</strong>
+                  <p>실행 계획 분석, Index 추가, 조회 구조 개선.</p>
+                </article>
+                <article>
+                  <span>BATCH PROCESSING</span>
+                  <strong>20분 이상 → 5분 미만</strong>
+                  <p>처리 구조 변경, 멀티 스레드, 대용량 집계 병목 개선.</p>
+                </article>
+              </div>
+              <div class="achievement-stories">
+                <article><span>01</span><h3>Event Alert</h3><p>재시도·재처리 구간의 중복 발송을 막고, 이중화 환경에서도 일관된 알림 흐름을 설계했습니다.</p></article>
+                <article><span>02</span><h3>Kafka HA</h3><p>IDC 이중화와 장애 전환 시나리오를 정의하고 실제 복구 절차까지 검증했습니다.</p></article>
+                <article><span>03</span><h3>Redis Sentinel</h3><p>Failover 조건과 클라이언트 동작을 점검해 운영 중단 가능성을 낮췄습니다.</p></article>
+              </div>
+              <p class="page-number">04</p>
+            </div>
+          </section>
+
+          <section
+            class="mag-page leadership-page paper-orange"
+            data-page-name="Technical Leadership"
+            data-page-kicker="HOW I WORK WITH A TEAM"
+            data-page-slug="leadership"
+          >
+            <div class="page-sheet">
+              <header class="page-header">
+                <span>05</span><strong>Leadership</strong><small>COLLABORATION</small>
+              </header>
+              <div class="leadership-lead">
+                <p class="eyebrow">TECHNICAL LEADERSHIP</p>
+                <h2>운영의 기준을<br />함께 만드는 역할</h2>
+                <blockquote>
+                  “단순히 구현을 끝내는 것이 아니라 장애·재처리·데이터 정합성까지 팀이 함께 판단할 기준을 만듭니다.”
+                </blockquote>
+              </div>
+              <div class="leadership-flow">
+                <article><span>DEFINE</span><h3>시나리오를 먼저 정의합니다.</h3><p>정상·장애·재시도·배포와 롤백 절차를 프로젝트 초기에 문서화합니다.</p></article>
+                <article><span>ALIGN</span><h3>구현 방향을 함께 맞춥니다.</h3><p>코드 리뷰와 페어 프로그래밍으로 기준을 공유하고 유지보수 가능한 구조를 만듭니다.</p></article>
+                <article><span>VERIFY</span><h3>운영 리스크를 미리 검증합니다.</h3><p>배포 전 검증 항목과 장애 대응 절차를 정리해 변경 작업의 위험을 낮춥니다.</p></article>
+                <article><span>EXTEND</span><h3>다음 문제까지 고려합니다.</h3><p>신규 기능에서 재처리, 중복, 데이터 정합성과 실제 운영 중 발생할 문제를 함께 검토합니다.</p></article>
+              </div>
+              <div class="leadership-line" aria-label="협업 흐름">
+                <span>Scenario</span><i></i><span>Architecture</span><i></i><span>Review</span><i></i><span>Operation</span>
+              </div>
+              <p class="page-number">05</p>
+            </div>
+          </section>
+
+          <section
+            class="mag-page career-page paper-white"
+            data-page-name="Career"
+            data-page-kicker="2018 — PRESENT"
+            data-page-slug="career"
+          >
+            <div class="page-sheet">
+              <header class="page-header">
+                <span>06</span><strong>Career</strong><small>2018 — PRESENT</small>
+              </header>
+              <div class="career-lead">
+                <p class="eyebrow blue">PROBLEM-LED CAREER</p>
+                <h2>문제 해결 중심의 커리어</h2>
+                <p>커머스 서비스 개발에서 출발해 대규모 인프라 데이터와 장애 대응, 운영 자동화를 설계하는 개발자로 확장했습니다.</p>
+              </div>
+              <div class="career-timeline">
+                <article class="current">
+                  <time>2021.04 — PRESENT</time>
+                  <div><span>PLATFORM / INFRASTRUCTURE</span><h3>엔테크서비스</h3><strong>백엔드 개발자</strong></div>
+                  <p>사내 서비스 인프라 이벤트 탐지 알림, 네이버 서버 관제 시스템 고도화, Kafka IDC 이중화, Redis Sentinel 운영 안정화, AI 업무 자동화 기능을 담당했습니다.</p>
+                  <ul><li>Event Alert & Monitoring</li><li>Kafka HA & Redis Sentinel</li><li>AI Application</li></ul>
+                </article>
+                <article>
+                  <time>2018.02 — 2021.04</time>
+                  <div><span>COMMERCE / SERVICE</span><h3>플그림</h3><strong>백엔드 개발자</strong></div>
+                  <p>네이버 Glyde, 삼성물산 SSF SHOP, Discovery Expedition 이커머스 구축과 고도화에서 전시, 상품, 정산 배치, 백오피스 개발을 맡았습니다.</p>
+                  <ul><li>Display & Product</li><li>Settlement Batch</li><li>Back Office</li></ul>
+                </article>
+              </div>
+              <div class="education-line"><span>EDUCATION</span><strong>청운대학교 컴퓨터학과</strong><small>2012.02 — 2018.02</small></div>
+              <p class="page-number">06</p>
+            </div>
+          </section>
+
+          <section
+            class="mag-page projects-index-page paper-ink"
+            data-page-name="Project Detail"
+            data-page-kicker="FIVE SYSTEMS / ONE PRINCIPLE"
+            data-page-slug="projects"
+          >
+            <div class="page-sheet project-spread-left">
+              <header class="page-header light">
+                <span>07</span><strong>Project Detail</strong><small>PART I</small>
+              </header>
+              <div class="projects-title">
+                <p class="eyebrow cyan">FIVE CASE STUDIES</p>
+                <h2>Five systems,<br />one operating<br />principle.</h2>
+                <p>문제, 기여, 결과를 같은 기준으로 읽을 수 있도록 다섯 개 시스템을 한 개의 특집으로 구성했습니다.</p>
+              </div>
+              <ol class="project-list">
+                <li><span>01</span><div><strong>Event Alert</strong><small>중복 없는 이벤트 탐지와 알림</small></div><em>2026</em></li>
+                <li><span>02</span><div><strong>AI Application</strong><small>업무 자동화와 시스템 고도화</small></div><em>2025</em></li>
+                <li><span>03</span><div><strong>Monitoring</strong><small>대규모 Metric 처리 최적화</small></div><em>2024</em></li>
+                <li><span>04</span><div><strong>Kafka HA</strong><small>IDC 이중화와 장애 전환</small></div><em>2023</em></li>
+                <li><span>05</span><div><strong>Legacy Migration</strong><small>점진적 전환과 운영 리스크 관리</small></div><em>2022</em></li>
+              </ol>
+              <p class="page-number light">07</p>
+            </div>
+          </section>
+
+          <section
+            class="mag-page projects-detail-page paper-ink"
+            data-page-name="Project Detail"
+            data-page-kicker="PROBLEM / CONTRIBUTION / RESULT"
+            data-page-slug="projects-detail"
+          >
+            <div class="page-sheet project-spread-right">
+              <header class="page-header light">
+                <span>08</span><strong>Project Detail</strong><small>PART II</small>
+              </header>
+              <article class="project-feature primary">
+                <div class="project-meta"><span>2026.05 — 2026.06</span><small>TEAM 4</small></div>
+                <h2>서비스 인프라 이벤트<br />탐지 알림 모듈</h2>
+                <p class="project-deck">Rule 기반 이벤트를 사용자에게 안정적으로 전달하는 알림 흐름을 설계했습니다.</p>
+                <div class="project-columns">
+                  <section><span>PROBLEM</span><p>이중화 환경의 재시도·재처리 과정에서 알림 유실과 중복 가능성.</p></section>
+                  <section><span>CONTRIBUTION</span><p>멀티모듈 책임 분리, Kafka 통신, Retry, Deduplication, DR 흐름 설계.</p></section>
+                  <section><span>RESULT</span><p>Failover 상황에서도 지속 가능한 처리 구조와 프로젝트별 Agent 규칙 수립.</p></section>
+                </div>
+                <p class="stack-line">Spring Boot · Spring Batch · Java 25 · Kafka · MySQL · React · Nginx</p>
+              </article>
+              <article class="project-feature secondary">
+                <div class="project-meta"><span>2025.09 — 2026.02</span><small>TEAM 2</small></div>
                 <h3>AI 기반 업무 자동화 및 시스템 고도화</h3>
-                <span>LLM을 시연에서 끝내지 않고 실제 사내 업무 흐름에 연결했습니다.</span>
-              </header>
-              <div class="case-columns">
-                <div><strong>RAG CHATBOT</strong><p>사내 시스템 가이드 문서를 자연어로 탐색하는 RAG 챗봇 설계·구현.</p></div>
-                <div><strong>CODE REVIEW</strong><p>GitHub Actions와 LLM을 연동한 Pull Request 코드리뷰 자동화.</p></div>
-                <div><strong>TOOL CALLING</strong><p>대화만으로 API 생성·수정·조회를 수행하는 Agent Prototype 개발.</p></div>
-              </div>
-              <p class="case-stack">LLM · RAG · Tool Calling · GitHub Actions · Agent</p>
-            </article>
-
-            <article class="project-panel" data-project="monitoring" role="tabpanel" aria-hidden="true">
-              <header>
-                <p>2021.04 — PRESENT / TEAM 5</p>
-                <h3>네이버 서버 관제 시스템 고도화</h3>
-                <span>실시간 Metric부터 운영 화면, 배치, Redis까지 관제 시스템 전반을 개선했습니다.</span>
-              </header>
-              <div class="case-columns">
-                <div><strong>PERFORMANCE</strong><p>쿼리 10초대에서 0~1초대, 배치 20분 이상에서 5분 미만으로 단축.</p></div>
-                <div><strong>OBSERVABILITY</strong><p>Kafka AdminClient 기반 파티션별 Consumer Lag 수집과 시각화.</p></div>
-                <div><strong>OPERATION</strong><p>Redis Sentinel 무중단 버전업, 대용량 Excel/CSV 스트리밍 다운로드.</p></div>
-              </div>
-              <p class="case-stack">Kotlin · WebFlux · Kafka · Redis · MySQL · Spring Batch · Next.js</p>
-            </article>
-
-            <article class="project-panel" data-project="ha" role="tabpanel" aria-hidden="true">
-              <header>
-                <p>2024.01 — 2024.03 / TEAM 3</p>
-                <h3>Kafka 클러스터 및 Consumer IDC 이중화</h3>
-                <span>재난 상황을 가정해 단일 IDC 장애에도 멈추지 않는 처리 구조를 만들었습니다.</span>
-              </header>
-              <div class="case-columns">
-                <div><strong>SCENARIO</strong><p>초기 단계부터 IDC 장애, 메시지 유실, 중복 처리 위험을 정의.</p></div>
-                <div><strong>ARCHITECTURE</strong><p>Kafka Cluster와 Consumer를 IDC 간 Active-Active 구조로 설계.</p></div>
-                <div><strong>RECOVERY</strong><p>Health Check와 자동 Failover로 수동 개입 없는 복구 흐름 구현.</p></div>
-              </div>
-              <p class="case-stack">Spring Boot · Kotlin · WebFlux · Kafka · Redis · MySQL</p>
-            </article>
-
-            <article class="project-panel" data-project="migration" role="tabpanel" aria-hidden="true">
-              <header>
-                <p>2021.09 — 2021.11 / TEAM 2</p>
-                <h3>개인정보관리 시스템 Spring Boot 전환</h3>
-                <span>Struts2 기반 레거시 시스템을 유지보수 가능한 계층형 구조로 전환했습니다.</span>
-              </header>
-              <div class="case-columns">
-                <div><strong>LEGACY</strong><p>Action 중심 Lucy/Struts2 구조와 XML 설정, 레거시 배치 시스템.</p></div>
-                <div><strong>MIGRATION</strong><p>Spring Boot, REST Controller, Java Config, 계층형 아키텍처로 재정비.</p></div>
-                <div><strong>RESULT</strong><p>모듈화와 유지보수성을 높이고 기존 배치를 Spring Batch로 전환.</p></div>
-              </div>
-              <p class="case-stack">Spring Boot · Spring Batch · Java 8 · MyBatis · MySQL</p>
-            </article>
-          </div>
-        </div>
-        <p class="margin-note">프로젝트는 기술 목록이 아니라, 어떤 위험을 먼저 발견하고 어떤 기준을 남겼는지로 기억합니다.</p>
-        <p class="folio light">08 / 09</p>
-      </section>
-
-      <section
-        class="spread portfolio-spread"
-        id="page-portfolio"
-        data-page="8"
-        data-title="Portfolio"
-        data-kicker="SHIPPED PRODUCTS / CONTACT"
-        role="tabpanel"
-        aria-label="포트폴리오"
-        aria-hidden="true"
-      >
-        <div class="spread-inner portfolio-layout">
-          <header class="portfolio-heading">
-            <p class="section-label dark">07 / PORTFOLIO</p>
-            <h2 tabindex="-1">Built, shipped,<br />and still reachable.</h2>
-            <p>직접 기획하고 만든 서비스는 실제 화면과 실행 가능한 링크로 보여드립니다.</p>
-          </header>
-
-          <div class="portfolio-grid">
-            <article class="portfolio-card">
-              <a href="https://mukchoice.kr" target="_blank" rel="noreferrer" class="portfolio-visual">
-                <img
-                  src="https://github.com/user-attachments/assets/098dd4fb-74d5-4e9a-9fca-289b6c3671ad"
-                  data-fallback="assets/images/mukchoice-mark.png"
-                  alt="먹초이스 데스크톱과 모바일 서비스 화면"
-                  loading="lazy"
-                />
-                <span>LIVE / MUKCHOICE.KR</span>
-              </a>
-              <div class="portfolio-copy">
-                <p>LOCATION / FOOD / RANDOM CHOICE</p>
-                <h3>먹초이스 MukChoice</h3>
-                <span>위치 기반 맛집 추천, 그룹 위시리스트와 랜덤 추천을 결합한 의사결정 지원 서비스.</span>
-                <dl>
-                  <div><dt>기간</dt><dd>2025.06.01 — 2025.09.14</dd></div>
-                  <div><dt>인원</dt><dd>이보원 / 개인 프로젝트</dd></div>
-                </dl>
-                <p class="portfolio-stack">Kotlin · Spring Boot · React · Docker</p>
-                <div class="portfolio-links">
-                  <a href="https://mukchoice.kr" target="_blank" rel="noreferrer">Service</a>
-                  <a href="https://github.com/dlqhdnjs5/MukChoice" target="_blank" rel="noreferrer">GitHub</a>
+                <div class="ai-grid">
+                  <p><span>RAG CHATBOT</span>사내 시스템 가이드 문서를 자연어로 탐색.</p>
+                  <p><span>CODE REVIEW</span>GitHub Actions와 LLM을 연동한 PR 자동화.</p>
+                  <p><span>TOOL CALLING</span>대화만으로 API 생성·수정·조회를 수행하는 Agent.</p>
                 </div>
-              </div>
-            </article>
-
-            <article class="portfolio-card">
-              <a href="https://nawago.net" target="_blank" rel="noreferrer" class="portfolio-visual logo-visual">
-                <img src="assets/images/nawago-logo.png" alt="나에게 와줘서 고마워 서비스 로고" loading="lazy" />
-                <span>LIVE / NAWAGO.NET</span>
-              </a>
-              <div class="portfolio-copy">
-                <p>OPEN API / COMMUNITY / ANIMAL CARE</p>
-                <h3>나에게 와줘서 고마워 Nawago</h3>
-                <span>공공 Open API 기반 유기동물 현황 조회와 커뮤니티 기능을 통합한 웹 서비스.</span>
-                <dl>
-                  <div><dt>기간</dt><dd>2020.12.17 — 2021.02.12</dd></div>
-                  <div><dt>인원</dt><dd>이보원, 권윤경</dd></div>
-                </dl>
-                <p class="portfolio-stack">Java · Spring Boot · Vue.js · AWS S3</p>
-                <div class="portfolio-links">
-                  <a href="https://nawago.net" target="_blank" rel="noreferrer">Service</a>
-                  <a href="https://github.com/dlqhdnjs5/nawago_project" target="_blank" rel="noreferrer">GitHub</a>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <footer class="back-cover">
-            <div>
-              <span>CONTACT / NEXT ISSUE</span>
-              <strong>다음 문제를 함께 해결할 준비가 되어 있습니다.</strong>
+              </article>
+              <p class="page-number light">08</p>
             </div>
-            <a href="mailto:dlqhdnjs5@naver.com">dlqhdnjs5@naver.com</a>
-            <a href="assets/docs/lee-bowon-portfolio.pdf" target="_blank" rel="noreferrer">Portfolio PDF</a>
-          </footer>
+          </section>
+
+          <section
+            class="mag-page portfolio-page paper-white"
+            data-page-name="Portfolio"
+            data-page-kicker="BUILT / SHIPPED / REACHABLE"
+            data-page-slug="portfolio"
+          >
+            <div class="page-sheet">
+              <header class="page-header">
+                <span>09</span><strong>Portfolio</strong><small>SHIPPED PRODUCTS</small>
+              </header>
+              <div class="portfolio-lead">
+                <p class="eyebrow green">BUILT, SHIPPED, STILL REACHABLE</p>
+                <h2>직접 만든 서비스는<br />실제 화면으로 보여드립니다.</h2>
+              </div>
+              <div class="portfolio-projects">
+                <article>
+                  <figure>
+                    <img
+                      src="https://github.com/user-attachments/assets/098dd4fb-74d5-4e9a-9fca-289b6c3671ad"
+                      data-fallback="assets/images/mukchoice-mark.png"
+                      alt="먹초이스 데스크톱과 모바일 서비스 화면"
+                    />
+                    <figcaption>LOCATION / FOOD / RANDOM CHOICE</figcaption>
+                  </figure>
+                  <div><h3>먹초이스 MukChoice</h3><p>위치 기반 맛집 추천, 그룹 위시리스트와 랜덤 추천을 결합한 의사결정 지원 서비스.</p><small>Kotlin · Spring Boot · React · Docker</small></div>
+                  <nav><a href="https://mukchoice.kr" target="_blank" rel="noreferrer">Service</a><a href="https://github.com/dlqhdnjs5" target="_blank" rel="noreferrer">GitHub</a></nav>
+                </article>
+                <article>
+                  <figure>
+                    <img src="assets/images/nawago-logo.png" alt="나에게 와줘서 고마워 서비스 로고" />
+                    <figcaption>OPEN API / COMMUNITY / ANIMAL CARE</figcaption>
+                  </figure>
+                  <div><h3>나에게 와줘서 고마워 Nawago</h3><p>공공 Open API 기반 유기동물 현황 조회와 커뮤니티 기능을 통합한 웹 서비스.</p><small>Java · Spring Boot · Vue.js · AWS S3</small></div>
+                  <nav><a href="https://nawago.net" target="_blank" rel="noreferrer">Service</a><a href="https://github.com/dlqhdnjs5" target="_blank" rel="noreferrer">GitHub</a></nav>
+                </article>
+              </div>
+              <p class="page-number">09</p>
+            </div>
+          </section>
+
+          <section
+            class="mag-page closing-page paper-lime"
+            data-page-name="Closing Note"
+            data-page-kicker="WHAT COMES NEXT"
+            data-page-slug="closing"
+          >
+            <div class="page-sheet">
+              <header class="page-header">
+                <span>10</span><strong>Closing Note</strong><small>CONTACT</small>
+              </header>
+              <div class="closing-copy">
+                <p class="eyebrow">THE NEXT SYSTEM</p>
+                <h2>좋은 시스템은<br />다음 판단을<br />더 쉽게 만듭니다.</h2>
+                <p>
+                  장애가 나지 않는 코드보다 장애가 났을 때 무엇을 해야 하는지 알 수 있는 구조,
+                  한 번의 성과보다 다음 개발자가 이어갈 수 있는 기준을 만들고 싶습니다.
+                </p>
+              </div>
+              <div class="contact-block">
+                <span>LEE BOWON</span>
+                <a href="mailto:dlqhdnjs5@naver.com">dlqhdnjs5@naver.com</a>
+                <a href="https://github.com/dlqhdnjs5" target="_blank" rel="noreferrer">github.com/dlqhdnjs5</a>
+                <a href="assets/docs/lee-bowon-resume.pdf" target="_blank" rel="noreferrer">Resume PDF</a>
+              </div>
+              <p class="issue-colophon">ISSUE 09 / DESIGNED AS AN INTERACTIVE CAREER MAGAZINE / 2026</p>
+              <p class="page-number">10</p>
+            </div>
+          </section>
+
+          <section
+            class="mag-page back-cover"
+            data-density="hard"
+            data-page-name="Back Cover"
+            data-page-kicker="END OF ISSUE 09"
+            data-page-slug="back-cover"
+          >
+            <div class="back-cover-inner">
+              <div class="back-issue"><span>ISSUE</span><strong>09</strong></div>
+              <blockquote>“문제를 발견하고, 구조를 설계하고, 운영 가능한 기준으로 남깁니다.”</blockquote>
+              <p>LEE BOWON / BACKEND DEVELOPER</p>
+              <button type="button" data-turn-page="0">READ AGAIN</button>
+            </div>
+          </section>
         </div>
-        <p class="margin-note">개인 프로젝트는 새로운 기술과 사용자 경험을 끝까지 서비스로 완성해보는 실험입니다.</p>
-        <p class="folio">09 / 09</p>
-      </section>
+      </div>
     </main>
 
-    <div class="page-controls" aria-label="페이지 이동">
-      <button id="prev-page" type="button" aria-label="이전 페이지" title="이전 페이지">
-        <span aria-hidden="true">←</span>
-      </button>
-      <div class="page-progress" aria-hidden="true"><i id="page-progress-fill"></i></div>
-      <span id="page-counter">01 / 09</span>
-      <button id="next-page" type="button" aria-label="다음 페이지" title="다음 페이지">
-        <span aria-hidden="true">→</span>
-      </button>
-    </div>
+    <footer class="reader-controls">
+      <button id="prev-page" class="turn-button" type="button" aria-label="이전 페이지" title="이전 페이지">←</button>
+      <div class="page-progress" aria-hidden="true"><span id="page-progress-fill"></span></div>
+      <p id="page-counter">COVER / 12</p>
+      <button id="next-page" class="turn-button" type="button" aria-label="다음 페이지" title="다음 페이지">→</button>
+    </footer>
 
-    <p class="keyboard-hint">← → PAGE / N NOTES</p>
-
-    <script src="script.js"></script>
+    <noscript>이 매거진을 넘기려면 JavaScript를 활성화해 주세요.</noscript>
+    <script src="assets/vendor/page-flip.browser.min.js"></script>
+    <script type="module" src="script.js"></script>
   </body>
 </html>
