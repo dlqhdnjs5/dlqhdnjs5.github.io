@@ -1109,18 +1109,27 @@ body.book-ready .magazine-book {
 }
 
 .portfolio-projects {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.8em;
   margin-top: 3em;
   border-top: 0.35em solid var(--ink);
 }
 
 .portfolio-projects article {
-  display: grid;
-  grid-template-columns: 1.25fr 1.45fr auto;
-  gap: 2em;
-  align-items: center;
-  min-height: 23em;
+  display: flex;
+  min-width: 0;
+  min-height: 42em;
+  flex-direction: column;
+  gap: 1.5em;
   padding: 2em 0;
-  border-bottom: 1px solid rgba(17, 19, 21, 0.24);
+  padding-right: 1.8em;
+  border-right: 1px solid rgba(17, 19, 21, 0.24);
+}
+
+.portfolio-projects article:last-child {
+  padding-right: 0;
+  border-right: 0;
 }
 
 .portfolio-projects figure {
@@ -1130,7 +1139,7 @@ body.book-ready .magazine-book {
 .portfolio-projects img {
   display: block;
   width: 100%;
-  aspect-ratio: 1.35;
+  aspect-ratio: 1.45;
   border: 1px solid rgba(17, 19, 21, 0.4);
   object-fit: contain;
   background: #fff;
@@ -1145,13 +1154,13 @@ body.book-ready .magazine-book {
 
 .portfolio-projects h3 {
   margin: 0 0 0.65em;
-  font-size: 1.55em;
+  font-size: 1.35em;
 }
 
 .portfolio-projects p {
   margin: 0 0 1.2em;
   color: #5b6366;
-  font-size: 0.8em;
+  font-size: 0.74em;
   line-height: 1.65;
 }
 
@@ -1162,8 +1171,9 @@ body.book-ready .magazine-book {
 }
 
 .portfolio-projects nav {
-  display: grid;
-  gap: 0.8em;
+  display: flex;
+  gap: 0.7em;
+  margin-top: auto;
 }
 
 .portfolio-projects nav a {
