@@ -667,26 +667,34 @@ body.book-ready .magazine-book {
 }
 
 .achievement-heading {
-  margin-top: 4em;
+  margin-top: 2.8em;
 }
 
 .achievement-heading h2 {
   margin: 0;
-  font-size: 4.5em;
+  font-size: 3.7em;
   line-height: 1.02;
+}
+
+.achievement-deck {
+  width: 82%;
+  margin: 1.25em 0 0;
+  color: #596164;
+  font-size: 0.9em;
+  line-height: 1.7;
 }
 
 .metric-ledger {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 3.8em;
+  margin-top: 2.4em;
   border-top: 0.35em solid var(--ink);
   border-bottom: 1px solid rgba(17, 19, 21, 0.35);
 }
 
 .metric-ledger article {
-  min-height: 16em;
-  padding: 2.3em 1.8em 2em;
+  min-height: 13.5em;
+  padding: 1.8em 1.5em;
   border-right: 1px solid rgba(17, 19, 21, 0.24);
 }
 
@@ -704,7 +712,7 @@ body.book-ready .magazine-book {
   display: block;
   margin: 0.65em 0;
   color: var(--blue);
-  font-size: 2.25em;
+  font-size: 2em;
   line-height: 1.1;
 }
 
@@ -726,8 +734,13 @@ body.book-ready .magazine-book {
 .achievement-stories {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2.5em;
-  margin-top: 3.2em;
+  gap: 2.2em;
+  margin-top: 2.4em;
+}
+
+.achievement-stories article {
+  padding-top: 1.5em;
+  border-top: 0.28em solid var(--ink);
 }
 
 .achievement-stories span {
@@ -737,15 +750,31 @@ body.book-ready .magazine-book {
 }
 
 .achievement-stories h3 {
-  margin: 0.55em 0 0.65em;
-  font-size: 1.35em;
+  min-height: 2.5em;
+  margin: 0.55em 0 0.6em;
+  font-size: 1.2em;
+  line-height: 1.25;
 }
 
 .achievement-stories p {
   margin: 0;
   color: #4f5759;
-  font-size: 0.84em;
-  line-height: 1.65;
+  font-size: 0.76em;
+  line-height: 1.55;
+}
+
+.achievement-stories ul {
+  margin: 1em 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.achievement-stories li {
+  padding: 0.55em 0;
+  border-top: 1px solid rgba(17, 19, 21, 0.2);
+  color: #303638;
+  font-size: 0.7em;
+  font-weight: 800;
 }
 
 .leadership-lead {
