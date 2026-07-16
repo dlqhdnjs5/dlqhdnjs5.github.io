@@ -1102,88 +1102,127 @@ body.book-ready .magazine-book {
 }
 
 .portfolio-lead {
-  margin-top: 3.5em;
+  margin-top: 1.7em;
 }
 
 .portfolio-lead h2 {
   margin: 0;
   color: var(--green);
-  font-size: 3.6em;
+  font-size: 3em;
   line-height: 1.05;
+}
+
+.portfolio-book-link {
+  display: grid;
+  min-height: 5.6em;
+  grid-template-columns: 11em 1fr auto;
+  gap: 1.4em;
+  align-items: center;
+  margin-top: 1.5em;
+  padding: 0 1.7em;
+  color: var(--ink);
+  background: var(--lime);
+  box-shadow: inset 0 0 0 1px var(--ink);
+  transition: color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.portfolio-book-link span {
+  font-size: 0.68em;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.portfolio-book-link strong {
+  font-size: 1.35em;
+}
+
+.portfolio-book-link i {
+  font-size: 2em;
+  font-style: normal;
+  line-height: 1;
+}
+
+.portfolio-book-link:hover,
+.portfolio-book-link:focus-visible {
+  color: #fff;
+  background: var(--ink);
+  transform: translateY(-0.18em);
 }
 
 .portfolio-projects {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.8em;
-  margin-top: 3em;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1em;
+  margin-top: 1.5em;
+  padding-top: 1em;
   border-top: 0.35em solid var(--ink);
 }
 
 .portfolio-projects article {
-  display: flex;
+  display: grid;
   min-width: 0;
-  min-height: 42em;
-  flex-direction: column;
-  gap: 1.5em;
-  padding: 2em 0;
-  padding-right: 1.8em;
-  border-right: 1px solid rgba(17, 19, 21, 0.24);
-}
-
-.portfolio-projects article:last-child {
-  padding-right: 0;
-  border-right: 0;
+  min-height: 17em;
+  grid-template-columns: 9.2em 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 0.8em 1.1em;
+  padding: 1.15em;
+  border: 1px solid rgba(17, 19, 21, 0.24);
+  border-left: 0.28em solid var(--blue);
+  background: rgba(255, 255, 255, 0.34);
 }
 
 .portfolio-projects figure {
+  grid-row: 1 / span 2;
   margin: 0;
 }
 
 .portfolio-projects img {
   display: block;
   width: 100%;
-  aspect-ratio: 1.45;
+  aspect-ratio: 1;
   border: 1px solid rgba(17, 19, 21, 0.4);
   object-fit: contain;
   background: #fff;
 }
 
 .portfolio-projects figcaption {
-  margin-top: 0.7em;
+  margin-top: 0.55em;
   color: var(--blue);
-  font-size: 0.64em;
+  font-size: 0.56em;
   font-weight: 950;
+  line-height: 1.35;
 }
 
 .portfolio-projects h3 {
-  margin: 0 0 0.65em;
-  font-size: 1.35em;
+  margin: 0 0 0.45em;
+  font-size: 1.15em;
 }
 
 .portfolio-projects p {
-  margin: 0 0 1.2em;
+  margin: 0 0 0.65em;
   color: #5b6366;
-  font-size: 0.74em;
-  line-height: 1.65;
+  font-size: 0.7em;
+  line-height: 1.5;
 }
 
 .portfolio-projects div small {
   color: var(--green);
-  font-size: 0.68em;
+  font-size: 0.61em;
   font-weight: 850;
+  line-height: 1.45;
 }
 
 .portfolio-projects nav {
   display: flex;
   gap: 0.7em;
-  margin-top: auto;
+  grid-column: 2;
+  margin-top: 0;
 }
 
 .portfolio-projects nav a {
   display: grid;
-  min-width: 6.2em;
-  min-height: 3em;
+  min-width: 5.8em;
+  min-height: 2.7em;
   place-items: center;
   border: 1px solid var(--ink);
   border-radius: 3px;
