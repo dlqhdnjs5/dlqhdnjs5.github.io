@@ -276,6 +276,10 @@ body.book-ready .magazine-book {
   pointer-events: none;
 }
 
+.magazine-book :is(a, button, [role="button"], [data-no-page-flip]) > * {
+  pointer-events: none;
+}
+
 .page-sheet {
   position: relative;
   width: 100%;

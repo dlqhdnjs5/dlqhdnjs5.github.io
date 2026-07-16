@@ -3,7 +3,6 @@ import * as THREE from "./assets/vendor/three.module.min.js";
 const bookElement = document.querySelector("#magazine-book");
 const bookStage = document.querySelector("#book-stage");
 const pageElements = [...document.querySelectorAll(".mag-page")];
-const turnTargets = [...document.querySelectorAll("[data-turn-page]")];
 const chapterButtons = [...document.querySelectorAll(".chapter-index [data-turn-page]")];
 const previousButton = document.querySelector("#prev-page");
 const nextButton = document.querySelector("#next-page");
@@ -12,6 +11,8 @@ const progressFill = document.querySelector("#page-progress-fill");
 const chapterKicker = document.querySelector("#chapter-kicker");
 const chapterTitle = document.querySelector("#chapter-title");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const pageInteractiveSelector =
+  "a, button, input, select, textarea, [role='button'], [data-no-page-flip]";
 
 const pageMeta = pageElements.map((page, index) => ({
   index,
@@ -21,7 +22,15 @@ const pageMeta = pageElements.map((page, index) => ({
 }));
 
 const slugToPage = new Map(pageMeta.map((page) => [page.slug, page.index]));
+const chapterTargets = chapterButtons
+  .map((button) => Number(button.dataset.turnPage))
+  .filter(Number.isFinite)
+  .sort((left, right) => left - right);
 const pageFlipConstructor = window.St?.PageFlip;
+const isPortfolioBook = document.body.classList.contains("portfolio-reader");
+const pageSize = isPortfolioBook
+  ? { width: 500, height: 760, maxWidth: 560, maxHeight: 850 }
+  : { width: 600, height: 760, maxWidth: 620, maxHeight: 785 };
 
 if (!pageFlipConstructor) {
   throw new Error("PageFlip library failed to load.");
@@ -31,13 +40,13 @@ const hashSlug = window.location.hash.replace("#", "");
 const initialPage = slugToPage.get(hashSlug) ?? 0;
 
 const pageFlip = new pageFlipConstructor(bookElement, {
-  width: 600,
-  height: 760,
+  width: pageSize.width,
+  height: pageSize.height,
   size: "stretch",
   minWidth: 280,
-  maxWidth: 620,
+  maxWidth: pageSize.maxWidth,
   minHeight: 355,
-  maxHeight: 785,
+  maxHeight: pageSize.maxHeight,
   drawShadow: true,
   flippingTime: reducedMotion ? 320 : 1180,
   usePortrait: true,
@@ -69,9 +78,14 @@ function visiblePageLabel(index) {
 }
 
 function activeChapterPage(index) {
-  if (index >= 9) return 9;
-  if (index >= 7) return 7;
-  return index;
+  let activeTarget = null;
+
+  for (const target of chapterTargets) {
+    if (target > index) break;
+    activeTarget = target;
+  }
+
+  return activeTarget;
 }
 
 function syncReader(index) {
@@ -81,10 +95,10 @@ function syncReader(index) {
 
   chapterKicker.textContent = meta.kicker;
   chapterTitle.textContent = meta.title;
-  pageCounter.textContent = visiblePageLabel(safeIndex);
-  progressFill.style.width = `${((safeIndex + 1) / pageMeta.length) * 100}%`;
-  previousButton.disabled = safeIndex === 0;
-  nextButton.disabled = safeIndex >= pageMeta.length - 1;
+  if (pageCounter) pageCounter.textContent = visiblePageLabel(safeIndex);
+  if (progressFill) progressFill.style.width = `${((safeIndex + 1) / pageMeta.length) * 100}%`;
+  if (previousButton) previousButton.disabled = safeIndex === 0;
+  if (nextButton) nextButton.disabled = safeIndex >= pageMeta.length - 1;
 
   chapterButtons.forEach((button) => {
     const target = Number(button.dataset.turnPage);
@@ -131,18 +145,50 @@ pageFlip.on("changeState", (event) => {
 
 pageFlip.loadFromHTML(document.querySelectorAll(".mag-page"));
 
-turnTargets.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    event.stopPropagation();
-    turnToPage(button.dataset.turnPage);
-  });
+document.addEventListener("click", (event) => {
+  const target =
+    event.target instanceof Element ? event.target.closest("[data-turn-page]") : null;
+
+  if (!target) return;
+
+  event.stopPropagation();
+  turnToPage(target.dataset.turnPage);
 });
 
-previousButton.addEventListener("click", () => pageFlip.flipPrev("top"));
-nextButton.addEventListener("click", () => pageFlip.flipNext("bottom"));
+function stopPageGesture(event) {
+  event.stopPropagation();
+}
+
+function protectPageInteractiveElements(root = bookElement) {
+  root.querySelectorAll(pageInteractiveSelector).forEach((element) => {
+    if (element.dataset.pageFlipProtected === "true") return;
+
+    element.dataset.pageFlipProtected = "true";
+    element.addEventListener("mousedown", stopPageGesture);
+    element.addEventListener("mousemove", stopPageGesture);
+    element.addEventListener("mouseup", stopPageGesture);
+    element.addEventListener("touchstart", stopPageGesture, { passive: true });
+    element.addEventListener("touchmove", stopPageGesture, { passive: true });
+    element.addEventListener("touchend", stopPageGesture, { passive: true });
+    element.addEventListener("touchcancel", stopPageGesture, { passive: true });
+  });
+}
+
+protectPageInteractiveElements();
+
+previousButton?.addEventListener("click", () => pageFlip.flipPrev("top"));
+nextButton?.addEventListener("click", () => pageFlip.flipNext("bottom"));
 
 window.addEventListener("keydown", (event) => {
-  if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
+  const interactiveTarget =
+    event.target instanceof Element ? event.target.closest(pageInteractiveSelector) : null;
+  const formTarget =
+    event.target instanceof Element
+      ? event.target.closest("input, select, textarea, [contenteditable='true']")
+      : null;
+
+  if (document.querySelector("dialog[open]") || formTarget) return;
+  if (interactiveTarget && (event.key === " " || event.key === "Enter")) return;
 
   if (event.key === "ArrowLeft" || event.key === "PageUp") {
     event.preventDefault();
@@ -173,10 +219,17 @@ window.addEventListener("hashchange", () => {
 });
 
 document.querySelectorAll("img[data-fallback]").forEach((image) => {
-  image.addEventListener("error", () => {
-    if (image.src.endsWith(image.dataset.fallback)) return;
-    image.src = image.dataset.fallback;
-  });
+  const applyFallback = () => {
+    const fallbackUrl = new URL(image.dataset.fallback, document.baseURI).href;
+    if (image.src === fallbackUrl) return;
+    image.src = fallbackUrl;
+  };
+
+  image.addEventListener("error", applyFallback);
+
+  if (image.complete && image.naturalWidth === 0) {
+    applyFallback();
+  }
 });
 
 function createReadingRoomScene() {
@@ -319,10 +372,11 @@ try {
   console.warn("WebGL scene unavailable; using the CSS reading room fallback.", error);
 }
 
-window.__issue09 = {
+const interactiveBookApi = {
   pageFlip,
   readingRoom3D,
   turnToPage,
+  protectPageInteractiveElements,
   getState: () => ({
     page: pageFlip.getCurrentPageIndex(),
     pageCount: pageFlip.getPageCount(),
@@ -331,3 +385,6 @@ window.__issue09 = {
     webgl: document.body.classList.contains("webgl-ready"),
   }),
 };
+
+window.__interactiveBook = interactiveBookApi;
+window.__issue09 = interactiveBookApi;

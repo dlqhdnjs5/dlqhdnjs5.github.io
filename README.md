@@ -28,7 +28,7 @@ An interactive career magazine for GitHub Pages. The portfolio is rendered as a 
 - `styles.css`: book stage, page layouts, paper surfaces, and responsive typography
 - `script.js`: page engine, chapter navigation, keyboard controls, hashes, image fallback, and 3D scene
 - `assets/images/`: profile and portfolio artwork
-- `assets/docs/lee-bowon-resume.pdf`: resume PDF
+- `assets/docs/lee-bowon-resume-2026.pdf`: resume PDF
 - `assets/docs/lee-bowon-portfolio.pdf`: portfolio PDF
 
 ## Interaction
